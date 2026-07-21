@@ -1,0 +1,19 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <% if alert.present? %>
+    <div class="alert alert-danger py-2 mb-3" style="font-size: 0.875rem;"><%= alert %></div>
+  <% end %>
+
+  <div class="form-floating mb-3">
+    <%= f.text_field :login, autofocus: true, autocomplete: "login", class: 'form-control', placeholder: t('devise_views.login'), id: "login" %>
+    <label for="login"><%= t('devise_views.login') %></label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <%= f.password_field :password, autocomplete: "current-password", class: "form-control", placeholder: t('devise_views.password'), id: "password" %>
+    <label for="password"><%= t('devise_views.password') %></label>
+  </div>
+
+  <p class="text-muted" style="font-size: 0.75rem;"><%= t('devise_views.forgot_contact_admin') %></p>
+
+  <%= f.submit t('devise_views.sign_in'), class: "btn btn-primary btn-login mt-2" %>
+<% end %>

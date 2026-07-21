@@ -1,0 +1,64 @@
+<div id="form">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= modal_title %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <%= simple_form_for(form_object, url: form_url, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body">
+      <div class="form-group row string optional <%= dom_id %>">
+        <label class="col-sm-3 col-form-label string optional" for="<%= dom_id %>"><%= t('common.file') %></label>
+        <div class="col-sm-9">
+          <a class="btn btn-sm btn-primary" id="<%= dom_id %>" href="#">
+            <i class="fa fa-plus"></i>
+            <span><%= t('common.choose_file') %></span>
+          </a>
+          <input type="file" id="<%= dom_id %>_input" accept="<%= file_extensions.split(',').map { |ext| ".#{ext.strip}" }.join(',') %>" style="display:none">
+          <span id="filename"></span>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag t('common.save'), class: 'btn btn-primary commit', data: { disable_with: t('common.saving') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+</div>
+
+<script type="text/javascript">
+  (function(){
+    var browseBtn = document.getElementById('<%= dom_id %>');
+    var fileInput = document.getElementById('<%= dom_id %>_input');
+    var selectedFile = null;
+
+    browseBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function(){
+      selectedFile = fileInput.files[0] || null;
+      $('#filename').text(selectedFile ? selectedFile.name : '');
+    });
+
+    $('.commit').click(function(){
+      if (!selectedFile) { return; }
+      showSpinner();
+      var upload = new ActiveStorage.DirectUpload(selectedFile, '<%= rails_direct_uploads_path %>');
+      upload.create(function(error, blob){
+        if (error) {
+          hideSpinner();
+          alert(error);
+        } else {
+          $.ajax({
+            type: 'PATCH',
+            url: '<%= upload_url %>',
+            data: {signed_id: blob.signed_id, file_name: selectedFile.name},
+            dataType: 'script',
+            success: function (data) {}
+          })
+        }
+      });
+    });
+  })();
+</script>

@@ -1,0 +1,27 @@
+// Visual tokens (P5 Task 7) — must come before custom/variables so it can
+// feed Bootstrap-consumed variables from these names.
+@import "tokens";
+
+// Custom variables (must come before Bootstrap import)
+@import "custom/variables";
+
+// Bootstrap 5 (from bootstrap gem)
+@import "bootstrap";
+
+// Vendor styles
+@import "font-awesome";
+@import "bootstrap-datepicker";
+@import "select2";
+
+// Custom theme modules
+@import "custom/layout";
+@import "custom/sidebar";
+@import "custom/navbar";
+@import "custom/cards";
+@import "custom/tables";
+@import "custom/forms";
+@import "custom/buttons";
+@import "custom/modals";
+@import "custom/devise";
+@import "custom/landing";
+@import "custom/utilities";

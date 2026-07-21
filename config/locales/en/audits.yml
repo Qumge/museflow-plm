@@ -1,0 +1,7 @@
+en:
+  audits:
+    breadcrumb_label: 'Approval Process'
+    section_label: 'Approval'
+    products_review_title: 'Product Drawing Approval'
+    instances_review_title: 'Part Drawing Approval'
+    technologies_review_title: 'Process Document Approval'

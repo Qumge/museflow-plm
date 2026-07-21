@@ -1,0 +1,88 @@
+<div class="row" id="flow_technologies">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th><%= Technology.human_attribute_name(:no) %></th>
+            <th><%= Technology.human_attribute_name(:name) %></th>
+            <th><%= t('common.file_name') %></th>
+            <th><%= t('common.uploaded_by') %></th>
+            <th><%= t('common.submitted_at') %></th>
+            <th><%= t('common.status') %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @flow_technology_logs.present? %>
+            <% @flow_technology_logs.each do |technology_log| %>
+              <tr>
+                <td>
+                  <%= link_to technology_log.technology&.no, technology_path(technology_log.technology), class: 'mono' %>
+                </td>
+                <td>
+                  <%= technology_log.technology&.name %>
+                </td>
+                <td>
+                  <% if technology_log.file_path.present? %>
+                    <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= technology_log.preview_url%>" data-file-name="<%= technology_log.file_name %>">
+                      <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  technology_log %>
+                    </a>
+                    <%= link_to technology_log.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                      <i class="fa fa-download"></i>
+                    <% end %>
+                  <% else %>
+                    <%= technology_log.file_name %>
+                  <% end %>
+                </td>
+                <td><%= technology_log.user&.name %></td>
+                <td><%= simple_time_mini technology_log.updated_at %></td>
+                <td><%= status_badge(technology_log) %></td>
+                <td>
+                  <% if can? :do_active_audit, :technologies %>
+                    <% if technology_log.may_do_active_audit?  %>
+                      <%= link_to 'JavaScript:void(0)', onclick: "active(#{technology_log.id})",class: 'btn btn-sm btn-success' do  %>
+                        <i class="fa fa-circle-o"></i><%= t('common.agree') %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                  <% if can? :do_failed_audit, :technologies %>
+                    <% if technology_log.may_do_failed_audit? %>
+                      <%= link_to 'JavaScript:void(0)', onclick: "failed(#{technology_log.id})",class: 'btn btn-sm btn-danger' do  %>
+                        <i class="fa fa-close"></i><%= t('common.reject') %>
+                      <% end %>
+                    <% end %>
+                  <% end %>
+
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="7" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+      function active(id){
+          if(confirm('<%= t('common.confirm_agree_final') %>')){
+              showSpinner();
+              $.ajax({
+                  type: 'post',
+                  url: '<%= do_active_audit_technologies_path %>',
+                  data: {id: id},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+
+      }
+
+  </script>
+</div>

@@ -1,0 +1,41 @@
+<%= render header_partial %>
+<div class="card">
+  <div class="card-header p-0 pt-1">
+    <% if nav_compact %>
+    <ul class="nav nav-tabs" role="tablist" data-turbolinks="false">
+      <li class="nav-item"><a class="nav-link active" href="#tab_1" data-bs-toggle="tab" role="tab"><%= t('common.basic_info') %></a></li>
+      <li class="nav-item"><a class="nav-link" href="#tab_2" data-bs-toggle="tab" role="tab"><%= t('common.version_history') %></a></li>
+      <li class="nav-item"><a class="nav-link" href="#tab_3" data-bs-toggle="tab" role="tab"><%= t('common.drawing_history') %></a></li>
+    </ul>
+    <% else %>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-bs-toggle="tab" href="#tab_1" role="tab"><%= t('common.basic_info') %></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#tab_2" role="tab"><%= t('common.version_history') %></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="tab" href="#tab_3" role="tab"><%= t('common.drawing_history') %></a>
+      </li>
+    </ul>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <div class="tab-content">
+      <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+        <%= render detail_partial %>
+      </div>
+      <div class="tab-pane fade" id="tab_2" role="tabpanel">
+        <%= render versions_partial %>
+      </div>
+      <div class="tab-pane fade" id="tab_3" role="tabpanel">
+        <%= render logs_partial %>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer text-end">
+    <%= link_to t('common.upload_drawing_link'), url_for(controller: controller_name, action: 'upload_file', id: record.id), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal", class: 'btn btn-success' if can? :upload_file, controller_name.to_sym %>
+    <%= link_to t('common.back'), url_for(controller: controller_name, action: 'index'), class: 'btn btn-secondary' %>
+  </div>
+</div>

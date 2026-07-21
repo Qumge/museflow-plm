@@ -1,0 +1,14 @@
+zh-CN:
+  devise_views:
+    login: '账号'
+    password: '密码'
+    sign_in: '登录'
+    forgot_contact_admin: '忘记账号、密码请联系上级管理员'
+    forgot_password: '忘记密码'
+    send_reset_email: '发送重置密码邮件'
+    change_password: '修改密码'
+    minimum_chars: '最少 %{count} 个字符'
+    email: '邮箱'
+    password_confirmation: '确认密码'
+    sign_up: '注册'
+    registration_disabled: '本系统未开放自助注册，请联系管理员为你创建账号。'

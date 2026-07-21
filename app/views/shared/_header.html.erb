@@ -1,0 +1,12 @@
+<% content_for :content_header do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to url_for(controller: controller_name, action: :index) do %>
+          <i class="fa <%= icon %>"></i> <%= label %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active"><%= get_title params %></li>
+    </ol>
+  </nav>
+<% end %>

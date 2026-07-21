@@ -1,0 +1,70 @@
+<% if wrapped %>
+  <div class="row" id="<%= dom_id %>">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+<% else %>
+<div class="table-responsive" id="<%= dom_id %>">
+<% end %>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th><%= t('common.file_name') %></th>
+        <th><%= t('common.uploaded_by') %></th>
+        <th><%= t('common.uploaded_at') %></th>
+        <th><%= t('common.status') %></th>
+        <th><%= t('common.effective_at') %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if record.view_logs(current_user).order("#{dom_id}.updated_at desc").present? %>
+        <% record.view_logs(current_user).order("#{dom_id}.updated_at desc").each do |log| %>
+          <tr>
+            <td>
+              <% if log.file_path.present? %>
+                <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= log.preview_url %>" data-file-name="<%= log.file_name %>">
+                  <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), log %>
+                </a>
+                <%= link_to log.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+                  <i class="fa fa-download"></i>
+                <% end %>
+              <% else %>
+                <%= log.file_name %>
+              <% end %>
+            </td>
+            <td><%= log.user&.name %></td>
+            <td><%= simple_time_mini log.updated_at %></td>
+            <td><%= status_badge(log) %></td>
+            <td><%= simple_time_mini log.active_at %></td>
+            <td>
+              <% if can? :apply, controller_name.to_sym %>
+                <% if log.may_do_apply? && @current_user == log.user %>
+                  <%= link_to t('common.apply'), url_for(controller: controller_name, action: 'apply', id: log.id), class: 'btn btn-sm btn-success', 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal" %>
+                <% end %>
+              <% end %>
+              <% if can? :edit_file, edit_file_target %>
+                <% if ['wait', 'failed'].include? log.status %>
+                  <%= link_to t('common.change_drawing'), url_for(controller: controller_name, action: 'edit_file', id: log.id), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal", class: 'btn btn-sm btn-primary' %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% if wrapped %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+</div>
+<% end %>

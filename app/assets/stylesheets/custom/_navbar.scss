@@ -1,0 +1,81 @@
+// Top navbar styles — same canvas as the page, separated only by a
+// hairline rule (P5 Task 8, area 2). Colour stays reserved for
+// approval-status badges, so the toggle/locale/logout controls are neutral
+// grey throughout, including the active locale link.
+.app-navbar {
+  height: $navbar-height;
+  background-color: $color-page-bg;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+
+  .navbar-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: $color-text-muted;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: $radius-sm;
+    margin-right: 16px;
+
+    &:hover {
+      background-color: $color-sidebar-active-bg;
+      color: $color-text;
+    }
+  }
+
+  .navbar-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .btn-logout {
+      color: $color-text-muted;
+      text-decoration: none;
+      font-size: 0.875rem;
+      padding: 6px 12px;
+      border-radius: $radius-sm;
+
+      &:hover {
+        background-color: $color-sidebar-active-bg;
+        color: $color-text;
+      }
+    }
+  }
+}
+
+// Language switcher — used in both the app navbar and the devise (login) layout.
+.locale-switch {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .locale-link {
+    color: $color-text-muted;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    padding: 4px 8px;
+    border-radius: $radius-sm;
+
+    &:hover {
+      background-color: $color-sidebar-active-bg;
+      color: $color-text;
+    }
+
+    &.active {
+      color: $color-text;
+      font-weight: 700;
+    }
+  }
+}
+
+.devise-locale-switch {
+  justify-content: center;
+  margin-bottom: 16px;
+}

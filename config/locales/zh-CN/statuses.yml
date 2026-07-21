@@ -1,0 +1,27 @@
+zh-CN:
+  statuses:
+    log_workflow:
+      wait: '草稿'
+      apply: '已提交'
+      develop: '技术已审批'
+      flow: '流程审批'
+      active: '已发布'
+      failed: '已驳回'
+    matter:
+      circulation: '流转中'
+      countersign: '会签中'
+      active: '已完成'
+    user_matter:
+      confirmed: '已确认'
+      failed: '失败'
+      pending: '待确认'
+    notice_status:
+      unread: '未读'
+      read: '已读'
+      unreplied: '待回复'
+      replied: '已回复'
+    role:
+      super_admin: '超级管理员'
+      develop_manager: '研发管理'
+      developer: '研发'
+      processer: '流程管理'

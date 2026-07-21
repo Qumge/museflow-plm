@@ -1,0 +1,31 @@
+<div class="card-body p-0">
+  <div class="d-flex justify-content-end p-2">
+    <%= paginate user_notices, params: {table_search: params[:table_search], status: params[:status]}, theme: 'bootstrap-5' %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped mb-0">
+      <tbody>
+      <% if user_notices.present? %>
+        <% user_notices.each do |user_notice| %>
+          <tr>
+            <td><%= link_to user_notice.notice&.title, notice_path(user_notice) %></td>
+            <td><%= user_notice.notice.sub_content %></td>
+            <td><%= user_notice.notice.need_reply ? (user_notice.replied ? t('statuses.notice_status.replied') : t('statuses.notice_status.unreplied')) : (user_notice.readed ? t('statuses.notice_status.read') : t('statuses.notice_status.unread')) %></td>
+            <td>
+              <% if user_notice&.notice&.file&.present? %>
+                <i class="fa fa-paperclip"></i>
+              <% end %>
+            </td>
+            <td><%= simple_time_mini user_notice.notice&.created_at %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="5"><%= t('notices.no_data') %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= paginated_footer user_notices, params: { table_search: params[:table_search] } %>

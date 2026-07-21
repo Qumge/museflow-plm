@@ -1,0 +1,68 @@
+// Form styles
+.form-control, .form-select {
+  border-radius: 6px;
+  border-color: $border-color;
+  font-size: 0.875rem;
+
+  &:focus {
+    border-color: $primary;
+    box-shadow: 0 0 0 3px rgba($primary, 0.1);
+  }
+}
+
+.form-label, .col-form-label {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+// Form validation
+.required abbr,
+.invalid-feedback {
+  color: $danger;
+}
+
+// Select2 overrides for Bootstrap 5
+.select2-container--default {
+  .select2-selection--single,
+  .select2-selection--multiple {
+    border-color: $border-color;
+    border-radius: 6px;
+    min-height: 38px;
+  }
+
+  .select2-selection--multiple .select2-selection__choice {
+    background-color: $primary;
+    border-color: darken($primary, 10%);
+    padding: 2px 10px;
+    color: #fff;
+    border-radius: 4px;
+  }
+
+  .select2-selection--multiple .select2-selection__choice__remove {
+    margin-right: 5px;
+    color: rgba(255,255,255,0.7);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+// Search input group
+.search-input-group {
+  max-width: 320px;
+
+  .form-control {
+    border-right: 0;
+  }
+
+  .btn {
+    border-color: $border-color;
+    color: #64748b;
+
+    &:hover {
+      background-color: #f1f5f9;
+    }
+  }
+}

@@ -1,0 +1,109 @@
+<div id="form">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= t('activerecord.models.notice') %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <%= simple_form_for(@notice, html: {class: 'form-horizontal group_form'}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body">
+      <%= f.input :title %>
+      <%# no label: override — falls through to Notice.human_attribute_name(:model_val)
+          via config/locales/{en,zh-CN}/model.yml (P4 Task 5). %>
+      <%= f.input :model_val, as: :select, collection: associated_models.collect{|model| ["#{model.class.get_model_name} / #{model.name}", "#{model.class.name}_#{model.id}"]}, input_html: { class: 'select2 form-control'} %>
+      <%= f.input :content %>
+      <%= f.input :need_reply, as: :select, collection: [[t('notices.no'), 0], [t('notices.yes'), 1]], include_blank: false %>
+      <div class="form-group row string optional train_attachment">
+        <label class="col-sm-3 col-form-label string optional" for="file"><%= t('common.attachment') %></label>
+        <div class="col-sm-9">
+          <a class="btn btn-sm btn-primary" id="file" href="#">
+            <i class="fa fa-plus"></i>
+            <span><%= t('common.choose_file') %></span>
+          </a>
+          <input type="file" id="file_input" style="display:none">
+          <span id="filename">
+            <% if @notice&.file&.path.present? %>
+              <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-secondary" data-url="<%= @notice&.file.preview_url %>" data-file-name="<%= @notice&.file.file_name %>">
+                <i class="fa fa-eye"></i> <%= show_file_name t('common.attachment'), @notice&.file %>
+              </a>
+            <% end %>
+          </span>
+        </div>
+      </div>
+      <%= f.input :user_ids, collection: User.all.collect{|user| [user.name, user.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder') %>
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag t('common.save'), class: 'btn btn-primary commit', data: { disable_with: t('common.saving') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+  <script type="text/javascript">
+    function getData(){
+      var array_data = $('.group_form').serializeArray();
+      var data = {}
+      var user_ids = []
+      for (var i=0;i<array_data.length;i++)
+      {
+        if(array_data[i].name === 'notice[user_ids][]'){
+          user_ids.push(array_data[i].value);
+        }else{
+          data[array_data[i].name]= array_data[i].value;
+        }
+      }
+      data['notice[user_ids][]'] = user_ids;
+      return data;
+    }
+
+    // 提交表单字段 + （如果选了新文件）signed_id/file_name。没有新选文件时
+    // 不带 signed_id——保留 Notice 原有附件，不重新创建一条 Attachment
+    // （原 qiniu 版本每次提交都会重发上一次的 file_path，导致编辑一次就多
+    // 一条重复 Attachment；这里顺带把这个问题避免掉）。
+    function submitNoticeForm(signedId, fileName){
+      var data = getData();
+      if (signedId) {
+        data['signed_id'] = signedId;
+        data['file_name'] = fileName;
+      }
+      $.ajax({
+        type: '<%= @notice.id.present? ? 'PATCH' : 'POST' %>',
+        url: '<%= @notice.id.present? ? notice_path(@notice) : notices_path %>',
+        data: data,
+        dataType: 'script',
+        success: function (data) {}
+      })
+    }
+
+    $(function(){
+      var browseBtn = document.getElementById('file');
+      var fileInput = document.getElementById('file_input');
+      var selectedFile = null;
+
+      browseBtn.addEventListener('click', function(e){
+        e.preventDefault();
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', function(){
+        selectedFile = fileInput.files[0] || null;
+        if (selectedFile) { $('#filename').text(selectedFile.name); }
+      });
+
+      $('.commit').click(function(){
+        showSpinner();
+        if (selectedFile) {
+          var upload = new ActiveStorage.DirectUpload(selectedFile, '<%= rails_direct_uploads_path %>');
+          upload.create(function(error, blob){
+            if (error) {
+              hideSpinner();
+              alert(error);
+            } else {
+              submitNoticeForm(blob.signed_id, selectedFile.name);
+            }
+          });
+        } else {
+          submitNoticeForm(null, null);
+        }
+      });
+      initSelect2($('.select2'));
+    });
+  </script>
+</div>

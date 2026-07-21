@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="table-responsive">
+      <table class="table detail-table">
+        <tbody>
+        <tr>
+          <th style="width:50%"><%= Matter.human_attribute_name(:name) %></th>
+          <td><%= @matter.name %></td>
+        </tr>
+        <tr>
+          <th style="width:50%"><%= t('common.creator') %></th>
+          <td><%= @matter.user&.name %></td>
+        </tr>
+
+        <tr>
+          <th style="width:50%"><%= t('matters.file_last_changed_by') %></th>
+          <td><%= @matter.file_user&.name %></td>
+        </tr>
+
+        <tr>
+          <th style="width:50%"><%= t('matters.file_changed_at') %></th>
+          <td><%= simple_time_mini @matter.last_update_at %></td>
+        </tr>
+
+        <tr>
+          <th>
+            <%= t('common.file') %>
+          </th>
+          <td>
+            <% if @matter.file_path.present?%>
+              <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= @matter.preview_url%>" data-file-name="<%= @matter.file_name %>">
+                <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  @matter %>
+              </a>
+              <%= link_to @matter.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                <i class="fa fa-download"></i>
+              <% end %>
+            <% else %>
+              <%= @matter.file_name %>
+            <% end %>
+          </td>
+        </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="table-responsive">
+      <table class="table detail-table">
+        <tbody>
+        <tr>
+          <th style="width:50%"><%= t('common.status') %></th>
+          <td><%= status_badge(@matter) %></td>
+        </tr>
+        <tr>
+          <th style="width:50%"><%= t('matters.countersign_initiator') %></th>
+          <td><%= @matter.countersign_user&.name %></td>
+        </tr>
+        <tr>
+          <th style="width:50%"><%= t('matters.countersign_initiated_at') %></th>
+          <td><%= simple_time_mini @matter.countersign_at %></td>
+        </tr>
+        <tr>
+          <th><%= Matter.human_attribute_name(:desc) %></th>
+          <td><%= @matter.desc %></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

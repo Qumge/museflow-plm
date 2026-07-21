@@ -1,0 +1,9 @@
+<% if @flag %>
+show_flash('success', '<%= t('flash.change_success') %>');
+<% else %>
+show_flash('failed', '<%= t('flash.change_failed') %>');
+<% end %>
+$('#<%= elem_id %>').replaceWith('<%= j render(partial: logs_partial) %>');
+hideSpinner();
+var modal = bootstrap.Modal.getInstance(document.getElementById('global-modal'));
+if(modal) modal.hide();

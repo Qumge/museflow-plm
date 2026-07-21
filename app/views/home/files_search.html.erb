@@ -1,0 +1,84 @@
+<%= render 'home/header' %>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <%= form_tag files_search_home_index_path, method: :get do %>
+        <div class="card-header">
+          <span><%= t('titles.home.files_search') %></span>
+          <div class="card-tools">
+            <div class="input-group input-group-sm search-input-group">
+              <input type="text" name="table_search" class="form-control" placeholder="<%= t('common.search') %>" value="<%= params[:table_search] %>">
+              <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="card-body p-0">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th><%= t('common.number') %></th>
+              <th><%= t('common.name') %></th>
+              <th><%= t('common.type') %></th>
+              <th><%= t('common.last_updated_at') %></th>
+              <th><%= t('common.creator') %></th>
+              <th><%= t('common.file') %></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @datas.present? %>
+              <% @datas.each do |data| %>
+                <tr>
+                  <td>
+                    <% if data.is_a? Instance %>
+                      <% if can? :show, :instances %>
+                        <%= link_to data.instance_no, instance_path(data) %>
+                      <% else %>
+                        <%= data.instance_no %>
+                      <% end %>
+                    <% elsif data.is_a? Product %>
+                      <% if can? :show, :products %>
+                        <%= link_to data.product_no, product_path(data) %>
+                      <% else %>
+                        <%= data.product_no %>
+                      <% end %>
+                    <% elsif data.is_a? Technology %>
+                      <% if can? :show, :technologies %>
+                        <%= link_to data.no, technology_path(data) %>
+                      <% else %>
+                        <%= data.no %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td><%= data.name %></td>
+                  <td><%= data.get_model_name %></td>
+                  <td><%= simple_time data.updated_at %></td>
+                  <td><%= data.user&.name %></td>
+                  <td>
+                    <% if data.file_path.present? && (data.is_a?(Technology) || current_user.send(data.class.name.pluralize.downcase).include?(data)) %>
+                      <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= data.preview_url %>" data-file-name="<%= data.file_name %>">
+                        <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), data %>
+                      </a>
+                      <%= link_to data.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+                        <i class="fa fa-download"></i>
+                      <% end %>
+                    <% else %>
+                      <%= data.file_name %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="6" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <%= paginated_footer @datas, params: { table_search: params[:table_search] } %>
+    </div>
+  </div>
+</div>

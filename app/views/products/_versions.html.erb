@@ -1,0 +1,53 @@
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th><%= Product.human_attribute_name(:product_no) %></th>
+        <th><%= Product.human_attribute_name(:name) %></th>
+        <th><%= Product.human_attribute_name(:norms) %></th>
+        <th><%= t('common.changed_at') %></th>
+        <th><%= t('common.drawing_creator') %></th>
+        <th><%= t('common.drawing') %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @product.versions.present? %>
+        <% @product.versions.each do |version| %>
+          <% if version.reify.present? %>
+            <tr>
+              <td class="mono">
+                <% if can? :show_version, :products %>
+                  <%= link_to version.reify.product_no, show_version_product_path(version.reify, version_id: version.id), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal" %>
+                <% else %>
+                  <%= version.reify.product_no %>
+                <% end %>
+              </td>
+              <td><%= version.reify.name %></td>
+              <td><%= version.reify.norms %></td>
+              <td><%= simple_time_mini version.created_at %></td>
+              <td><%= version.reify&.file_user&.name %></td>
+              <td>
+                <% if version.reify.file_path.present? %>
+                  <% if current_user.can_view?(@product) %>
+                    <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= version.reify.preview_url %>" data-file-name="<%= version.reify.file_name %>">
+                      <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), version.reify %>
+                    </a>
+                    <%= link_to version.reify.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+                      <i class="fa fa-download"></i>
+                    <% end %>
+                  <% else %>
+                    <%= show_file_name t('common.file'), version.reify %>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

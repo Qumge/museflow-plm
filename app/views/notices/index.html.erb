@@ -1,0 +1,28 @@
+<%= render 'notices/header' %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" href="#tab_1" data-bs-toggle="tab" role="tab"><%= t('notices.receives_tab') %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab_2" data-bs-toggle="tab" role="tab"><%= t('notices.sends_tab') %></a>
+          </li>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+            <%= render partial: 'notices/receives', locals: {user_notices: @receive_notices} %>
+          </div>
+          <div class="tab-pane fade" id="tab_2" role="tabpanel">
+            <%= render partial: 'notices/sends', locals: {notices: @send_notices} %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

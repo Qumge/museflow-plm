@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="col-md-6">
+    <table class="table detail-table">
+      <tbody>
+      <tr>
+        <th><%= Instance.human_attribute_name(:instance_no) %></th>
+        <td class="mono"><%= @instance.instance_no %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:name) %></th>
+        <td><%= @instance.name %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:parent_id) %></th>
+        <td><%= @instance.parent&.name %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:instance_category_id) %></th>
+        <td><%= @instance.instance_category&.name %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:norms) %></th>
+        <td><%= @instance.norms %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing') %></th>
+        <td>
+          <% if @instance.file_path.present? && current_user.can_view?(@instance) %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= @instance.preview_url %>" data-file-name="<%= @instance.file_name %>">
+              <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), @instance %>
+            </a>
+            <%= link_to @instance.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% else %>
+            <%= @instance.file_name %>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:organization_ids) %></th>
+        <td>
+          <% @instance.organizations.each do |org| %>
+            <span class="badge bg-primary"><%= org.name %></span>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table detail-table">
+      <tbody>
+      <tr>
+        <th><%= t('common.creator') %></th>
+        <td><%= @instance&.user&.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.created_at') %></th>
+        <td><%= simple_time @instance.created_at %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing_changed_by') %></th>
+        <td><%= @instance&.file_user&.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing_changed_at') %></th>
+        <td><%= simple_time @instance.last_updated_at %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:desc) %></th>
+        <td><%= @instance.desc %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:technology_id) %></th>
+        <td><%= link_to @instance.technology&.name, technology_path(@instance.technology) if @instance.technology.present? %></td>
+      </tr>
+      <tr>
+        <th><%= Instance.human_attribute_name(:user_ids) %></th>
+        <td>
+          <% @instance.users.each do |user| %>
+            <span class="badge bg-primary"><%= user.name %></span>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

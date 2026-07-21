@@ -1,0 +1,15 @@
+<% content_for :content_header do %>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0"><%= t('nav.notices') %></h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <%= link_to receives_notices_path do %>
+            <i class="fa fa-dashboard"></i> <%= t('nav.notices') %>
+          <% end %>
+        </li>
+        <li class="breadcrumb-item active"><%= get_title params %></li>
+      </ol>
+    </nav>
+  </div>
+<% end %>

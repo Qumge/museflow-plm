@@ -1,0 +1,116 @@
+<aside class="app-sidebar">
+  <div class="sidebar-brand">
+    <%= render 'shared/logo_mark', css_class: 'sidebar-brand-mark' %>
+    <span class="brand-text">MuseFlow</span>
+  </div>
+
+  <div class="sidebar-user">
+    <div class="user-avatar">
+      <%= current_user.name.present? ? current_user.name[0].upcase : 'D' %>
+    </div>
+    <div class="user-info">
+      <div class="user-name"><%= current_user.name %></div>
+      <div class="user-role"><%= current_user.role&.display_name %></div>
+    </div>
+  </div>
+
+  <div class="sidebar-menu-label"><%= t('nav.console') %></div>
+
+  <ul class="sidebar-menu">
+    <% if can? :index, :home %>
+      <li class="<%= active_class params, 'home', 'index' %>">
+        <%= link_to root_path do %>
+          <i class="fa fa-home"></i> <span><%= t('nav.home') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :files_search, :home %>
+      <li class="<%= active_class params, 'home', 'files_search' %>">
+        <%= link_to files_search_home_index_path do %>
+          <i class="fa fa-search"></i> <span><%= t('nav.global_search') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :index, :products %>
+      <li class="<%= active_class params, 'products' %>">
+        <%= link_to products_path do %>
+          <i class="fa fa-leaf"></i> <span><%= t('nav.products') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :index, :instances %>
+      <li class="<%= active_class params, 'instances' %>">
+        <%= link_to instances_path do %>
+          <i class="fa fa-cogs"></i> <span><%= t('nav.instances') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :index, :technologies %>
+      <li class="<%= active_class params, 'technologies' %>">
+        <%= link_to technologies_path do %>
+          <i class="fa fa-file-o"></i> <span><%= t('nav.technologies') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :index, :audits %>
+      <li class="<%= active_class params, 'audits' %>">
+        <%= link_to audits_path do %>
+          <i class="fa fa-pencil"></i> <span><%= t('nav.audits') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <% if can? :index, :matters %>
+      <li class="<%= active_class params, 'matters' %>">
+        <%= link_to matters_path do %>
+          <i class="fa fa-file-excel-o"></i> <span><%= t('nav.matters') %></span>
+        <% end %>
+      </li>
+    <% end %>
+
+    <li>
+      <a href="#notices-submenu" data-bs-toggle="collapse" aria-expanded="<%= params[:controller] == 'notices' ? 'true' : 'false' %>">
+        <i class="fa fa-bell"></i>
+        <span><%= t('nav.notices') %></span>
+        <span class="menu-badge">
+          <% if @unread_notices.size > 0 %>
+            <span class="badge bg-warning"><%= @unread_notices.size %></span>
+          <% end %>
+          <% if @unreply_notices.size > 0 %>
+            <span class="badge bg-danger"><%= @unreply_notices.size %></span>
+          <% end %>
+        </span>
+        <i class="fa fa-angle-down menu-arrow"></i>
+      </a>
+      <ul class="sidebar-submenu collapse <%= params[:controller] == 'notices' ? 'show' : '' %>" id="notices-submenu">
+        <% if can? :receives, :notices %>
+          <li class="<%= active_class params, 'receives', 'notices' %>">
+            <%= link_to receives_notices_path do %>
+              <i class="fa fa-envelope"></i> <span><%= t('nav.notices_receives') %></span>
+            <% end %>
+          </li>
+        <% end %>
+        <% if can? :sends, :notices %>
+          <li class="<%= active_class params, 'sends', 'notices' %>">
+            <%= link_to sends_notices_path do %>
+              <i class="fa fa-send"></i> <span><%= t('nav.notices_sends') %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </li>
+
+    <% if current_user.has_role? 'super_admin' %>
+      <li>
+        <%= link_to rails_admin_path do %>
+          <i class="fa fa-gear"></i> <span><%= t('nav.admin') %></span>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</aside>

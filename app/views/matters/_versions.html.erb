@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th><%= Matter.human_attribute_name(:name) %></th>
+                <th><%= t('common.changed_at') %></th>
+                <th><%= t('matters.file_creator') %></th>
+                <th><%= t('common.file') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @matter.versions.present? %>
+                <% @matter.versions.each do |version| %>
+                  <% if version.reify.present? %>
+                    <tr>
+                      <td><%= version.reify.name%></td>
+                      <td><%= simple_time_mini version.created_at %></td>
+                      <td><%= version.reify&.file_user&.name %></td>
+                      <td>
+                        <% if version.reify.file_path.present?  %>
+                            <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
+                              <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  version.reify %>
+                            </a>
+                            <%= link_to version.reify.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                              <i class="fa fa-download"></i>
+                            <% end %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="4" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+  </div>
+</div>

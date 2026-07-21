@@ -1,0 +1,5 @@
+en:
+  home:
+    view_details: 'View Details'
+    show_related_only: 'Show Related Only'
+    no_role_notice: 'Your account has not been assigned a role yet, so there is nothing to show here. Please contact an administrator to have access granted.'

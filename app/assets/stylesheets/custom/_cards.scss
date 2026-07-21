@@ -1,0 +1,67 @@
+// Card component styles (replaces AdminLTE box) — P5 Task 8, area 7.
+//
+// Flat surface, no drop shadow: a 1px structural-border rule + a small
+// radius, matching the token comment's "engineering tool" direction (see
+// _tokens.scss). Previously a rounded 8px card with a soft box-shadow.
+.card {
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  box-shadow: none;
+  margin-bottom: 20px;
+  background: $content-bg;
+
+  .card-header {
+    background-color: $content-bg;
+    border-bottom: 1px solid $color-border;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    border-radius: $radius-sm $radius-sm 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .card-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .card-footer {
+    background-color: $color-sidebar-bg;
+    border-top: 1px solid $color-border;
+    padding: 12px 16px;
+    border-radius: 0 0 $radius-sm $radius-sm;
+  }
+}
+
+// Stat cards for audit index — these are navigation tiles into the three
+// audit sections, not approval status, so per the "colour only for status"
+// rule the accent border goes neutral (was $primary/$success/$warning per
+// section). The icon colour classes are Bootstrap utilities applied inline
+// in the view; those are neutralised in custom/_utilities.scss (P5 Task 9,
+// audits area) alongside the rest of that page's pass.
+.stat-card {
+  border-left: 4px solid $color-border;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  .stat-label {
+    font-size: 0.8125rem;
+    color: $color-text-muted;
+  }
+}

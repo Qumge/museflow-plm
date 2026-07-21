@@ -1,0 +1,39 @@
+<div class="modal-header">
+  <h5 class="modal-title"><%= t('common.bom_batch_import') %></h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<%= form_tag(do_import_products_path, multipart: true) do %>
+  <div class="modal-body">
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="develop_id"><%= t('activerecord.attributes.product_log.develop_id') %> <abbr title="required">*</abbr></label>
+      <%= select_tag :develop_id, options_for_select(current_user.audit_users(:develop, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="company_id"><%= t('activerecord.attributes.product_log.flow_id') %> <abbr title="required">*</abbr></label>
+      <%= select_tag :flow_id, options_for_select(current_user.audit_users(:flow, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="project_company_id"><%= t('activerecord.attributes.product_log.active_id') %> <abbr title="required">*</abbr></label>
+      <%= select_tag :active_id, options_for_select(current_user.audit_users(:active, :products).all.collect{|user| [user.name, user.id]}), class: 'select2 form-control select required', width: '100%', style: 'width: 100%' %>
+    </div>
+
+    <div class="form-group select required project_company_id">
+      <label class="form-control-label select required" for="project_company_id"><%= t('common.zip_file') %> <abbr title="required">*</abbr></label>
+      <%= file_field_tag :file, accept: 'application/zip;application/x-zip-compressed' %>
+    </div>
+  </div>
+<% end %>
+<div class="modal-footer">
+  <%= submit_tag t('common.save'), class: 'btn btn-primary', data: { disable_with: t('common.processing') }, id: 'commit' %>
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    $('#commit').click(function(){
+      if($('#develop_id').val() && $('#flow_id').val() && $('#active_id').val() && $('#file').val()){
+        $('form').submit();
+      }
+    });
+  });
+</script>

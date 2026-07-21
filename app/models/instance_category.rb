@@ -1,0 +1,2 @@
+class InstanceCategory < ApplicationRecord
+end

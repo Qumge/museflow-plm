@@ -1,0 +1,8 @@
+<% if @flag %>
+var modal = bootstrap.Modal.getInstance(document.getElementById('global-modal'));
+if(modal) modal.hide();
+location.reload();
+<% else %>
+hideSpinner();
+$('#form').html('<%= j render "/notices/form"%>');
+<% end %>

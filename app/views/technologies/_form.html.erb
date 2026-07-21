@@ -1,0 +1,54 @@
+<div id="form">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= t('activerecord.models.technology') %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <%= simple_form_for(@technology, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body">
+      <%# no label: override — falls through to Technology.human_attribute_name(:no)
+          via config/locales/{en,zh-CN}/model.yml (P4 Task 5). %>
+      <%= f.input :no, input_html: { class: 'mono' } %>
+      <%= f.input :name%>
+      <div class="form-group row string optional technology_valid_at">
+        <label class="col-sm-3 col-form-label string optional" for="technology_valid_at"><%= Technology.human_attribute_name(:valid_at) %></label>
+        <div class="col-sm-9">
+          <div class="input-group date">
+            <span class="input-group-text">
+              <i class="fa fa-calendar"></i>
+            </span>
+            <input type="text" class="form-control datepicker" value='<%= simple_time @technology.valid_at %>' id="technology_valid_at" name="technology[valid_at]" readonly>
+          </div>
+        </div>
+      </div>
+      <%= f.input :desc %>
+      <%= f.input :instance_ids, collection: Instance.all.collect{|instance| ["#{instance.instance_no}-#{instance.name}", instance.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder')%>
+      <%= f.input :product_ids, collection: Product.all.collect{|product| ["#{product.product_no}-#{product.name}", product.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder')%>
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag t('common.save'), class: 'btn btn-primary commit', data: { disable_with: t('common.saving') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+
+  <script type="text/javascript">
+    $(function(){
+      $('.commit').click(function(){
+        showSpinner();
+        $.ajax({
+          type: "POST",
+          url: $('.group_form').attr('action'),
+          data: $('.group_form').serialize(),
+          dataType: 'script',
+          async: false,
+          error: function(request) { alert("Connection error"); }
+        });
+      });
+      initSelect2($('.select2'));
+      $('.datepicker').datepicker({
+        autoclose: true,
+        language: 'zh-cn'
+      });
+    });
+  </script>
+</div>

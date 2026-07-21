@@ -1,0 +1,29 @@
+en:
+  statuses:
+    log_workflow:
+      wait: 'Draft'
+      apply: 'Submitted'
+      develop: 'Engineering Approved'
+      flow: 'Process Approved'
+      active: 'Released'
+      failed: 'Rejected'
+    matter:
+      circulation: 'In Routing'
+      countersign: 'In Concurrent Approval'
+      active: 'Completed'
+    user_matter:
+      confirmed: 'Confirmed'
+      failed: 'Failed'
+      pending: 'Pending'
+    notice_status:
+      unread: 'Unread'
+      read: 'Read'
+      unreplied: 'Pending Reply'
+      replied: 'Replied'
+    # Role#display_name（Role.ROLES 的中文 value 只在 Role.load! 建行那一刻
+    # 写进 roles.name 列，语言切换后并不会跟着变——见 app/models/role.rb）。
+    role:
+      super_admin: 'Super Admin'
+      develop_manager: 'Engineering Manager'
+      developer: 'Engineer'
+      processer: 'Process Manager'

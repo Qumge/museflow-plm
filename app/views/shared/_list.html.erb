@@ -1,0 +1,135 @@
+<%#
+  Shared BOM/reference tree table for the products, instances and technologies
+  index pages (P5 Task 6 — server-side render).
+
+  matters/_list.html.erb is intentionally NOT merged into this partial: it is a
+  flat, non-tree table built from a completely different shape (plain `.each`
+  over records, no `bootstrapTreeTable`, no nesting) — see task-6 brief
+  correction 1. Forcing it through this partial would mean branching this
+  template around a shape it was never designed for.
+
+  Locals:
+    rows                   — Array<{ record:, depth: }>, in pre-order render
+                              order, from ApplicationHelper#tree_rows (products,
+                              instances) or #technology_tree_rows (technologies).
+    title                  — card header text.
+    search_path            — path the "table_search" form submits to (GET).
+    pagination_collection  — the Kaminari-paginated collection, for the
+                              card-footer paginator.
+    new_path / new_label   — "new" button target + label, or nil to omit it
+                              (permission check happens in the caller).
+    import_path / import_label — "import" button target + label, or nil to
+                              omit it (technologies has no import action).
+    columns                — ordered subset of
+                              [:no, :name, :type, :norms, :creator, :action]
+                              declaring which columns this line shows
+                              (technologies has no :norms / "型号" column).
+    primary_class           — the model class this index page is *of*
+                              (e.g. Product for the products page). Only rows
+                              whose record is an instance of this class get the
+                              actions column — matches the old client-side
+                              behaviour, where e.g. a product's nested instance
+                              rows had no edit/delete buttons of their own.
+    resource_name           — symbol used for `can?` checks (e.g. :products)
+                              and to namespace the wrapper id.
+%>
+<% column_widths = { no: '20%', name: '20%', type: columns.include?(:norms) ? '10%' : '20%', norms: '20%', creator: '10%', action: '20%' } %>
+<div class="row" id="<%= resource_name %>-list">
+  <div class="col-12">
+    <div class="card">
+      <%= form_tag search_path, method: :get do %>
+        <div class="card-header">
+          <span><%= title %></span>
+          <% if new_path.present? %>
+            <%= link_to new_label, new_path, class: 'btn btn-sm btn-success ms-2', 'data-bs-toggle' => 'modal', 'data-bs-target' => '#global-modal' %>
+          <% end %>
+          <% if import_path.present? %>
+            <%= link_to import_label, import_path, 'data-bs-toggle' => 'modal', 'data-bs-target' => '#global-modal', class: 'btn btn-sm btn-outline-secondary ms-2' %>
+          <% end %>
+          <div class="card-tools">
+            <div class="input-group input-group-sm search-input-group">
+              <input type="text" name="table_search" class="form-control" placeholder="<%= t('common.search') %>" value="<%= params[:table_search] %>">
+              <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="card-body p-0">
+        <table class="table table-tree mb-0">
+          <thead>
+            <tr>
+              <% columns.each do |column| %>
+                <th style="width: <%= column_widths[column] %>">
+                  <% case column
+                     when :no %><%= t('common.number') %>
+                  <% when :name %><%= t('common.name') %>
+                  <% when :type %><%= t('common.type') %>
+                  <% when :norms %><%= Product.human_attribute_name(:norms) %>
+                  <% when :creator %><%= t('common.creator') %>
+                  <% when :action %><%= t('common.action') %>
+                  <% end %>
+                </th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+            <% if rows.blank? %>
+              <tr>
+                <td colspan="<%= columns.size %>" class="text-center"><%= t('common.no_data') %></td>
+              </tr>
+            <% end %>
+            <% rows.each_with_index do |row, index| %>
+              <% record = row[:record] %>
+              <% depth = row[:depth] %>
+              <% has_children = rows[index + 1].present? && rows[index + 1][:depth] > depth %>
+              <tr data-depth="<%= depth %>" class="<%= 'd-none' if depth > 0 %>">
+                <% columns.each do |column| %>
+                  <td>
+                    <% case column
+                       when :no %>
+                      <span class="tree-cell" style="--depth: <%= depth %>;">
+                        <% if has_children %>
+                          <button type="button" class="tree-toggle collapsed">
+                            <i class="fa fa-caret-right"></i>
+                          </button>
+                        <% else %>
+                          <span class="tree-toggle-spacer"></span>
+                        <% end %>
+                        <%= link_to record.display_number, polymorphic_path(record), class: 'mono' %>
+                      </span>
+                    <% when :name %>
+                      <%= record.name %>
+                    <% when :type %>
+                      <%= record.class.get_model_name %>
+                    <% when :norms %>
+                      <%= record.respond_to?(:norms) ? record.norms : nil %>
+                    <% when :creator %>
+                      <%= record.user&.name %>
+                    <% when :action %>
+                      <% if record.instance_of?(primary_class) %>
+                        <% if can? :edit, resource_name %>
+                          <%= link_to polymorphic_path(record, action: 'edit'), class: 'btn btn-outline-secondary btn-sm btn-row-action', data: { 'bs-toggle' => 'modal', 'bs-target' => '#global-modal' } do %>
+                            <i class="fa fa-edit"></i> <%= t('common.edit') %>
+                          <% end %>
+                        <% end %>
+                        <% if can? :destroy, resource_name %>
+                          <%= link_to polymorphic_path(record), method: :delete, class: 'btn btn-outline-secondary btn-sm btn-row-action btn-row-danger ms-1', data: { confirm: t('common.confirm_delete') } do %>
+                            <i class="fa fa-close"></i> <%= t('common.delete') %>
+                          <% end %>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <%= paginated_footer pagination_collection, params: { table_search: params[:table_search] } %>
+
+    </div>
+  </div>
+</div>

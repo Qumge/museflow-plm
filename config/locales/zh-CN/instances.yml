@@ -1,0 +1,9 @@
+zh-CN:
+  instances:
+    import_link: 'Bom单导入'
+    import:
+      required: '必填'
+      optional: '选填'
+      header_note: '表格样式如上所示,表头（第一行）必须和上述表格一致'
+      category_note: '【物料属性】必须提前录入到系统当中'
+      code_note: '【物料代码】为物料的唯一标识，如果重复导入会更新物料信息'

@@ -1,0 +1,117 @@
+zh-CN:
+  activerecord:
+    models:
+      role: '角色'
+      organization: '组织架构'
+      resource: '权限资源'
+      user: '用户'
+      product: '产品'
+      instance: '零件'
+      technology: '工艺文件'
+      matter: 'Bom单'
+      notice: '通知'
+      # 仅在 rails_admin 后台出现的模型（见
+      # config/initializers/rails_admin.rb 的 config.included_models）。
+      # P4 Task 7：rails_admin 3 原生读取 activerecord.models/.attributes，
+      # 初始化文件里的 label/label_plural DSL 删掉后需要在这里补全。
+      category: '产品类型'
+      instance_category: '物料属性'
+    attributes:
+      user:
+        login: "帐号"
+        email: "邮箱"
+        password: "密码"
+        phone: '手机号码'
+        password_confirmation: "重复密码"
+        role_id: '角色'
+        agent_id: '代理商'
+        title: '职务'
+        name: '姓名'
+        # 关联字段名（rails_admin 的 `field :organization` / `field :role`
+        # 块），和上面给非 admin 用户表单里 FK 下拉框用的 *_id 是两个不同的
+        # key。
+        organization: '部门'
+        role: '角色'
+      organization:
+        name: '组织名'
+        desc: '备注'
+        created_at: '创建时间'
+        updated_at: '最后修改时间'
+      role:
+        name: '角色名'
+        desc: '说明'
+        resources: '权限'
+      resource:
+        name: '说明'
+        action: '操作'
+        target: '模块'
+      category:
+        name: '类型名'
+      instance_category:
+        name: '属性名'
+        desc: '备注'
+      product:
+        product_no: '产品编号'
+        "no": '产品代码'
+        name: '产品名'
+        reference_price: '单价'
+        unit: '单位'
+        brand: '品牌'
+        norms: '型号'
+        market_price: '市场价'
+        acquisition_price: '集采价'
+        freight: '运费'
+        product_category_id: '产品类型'
+        color: '外观颜色'
+        desc: '备注'
+        category_id: '产品类型'
+        instance_ids: '关联零件'
+        user_ids: '图纸可见人员'
+        technology_id: '工艺文件'
+        organization_ids: '图纸可见部门'
+      instance:
+        instance_no: '零件编号'
+        name: '零件名'
+        norms: '型号'
+        desc: '备注'
+        user_ids: '图纸可见人员'
+        technology_id: '工艺文件'
+        product_ids: '关联产品'
+        organization_ids: '图纸可见部门'
+        parent_id: '父节点'
+        instance_category_id: '物料属性'
+      technology:
+        "no": '文件编号'
+        name: '文件名'
+        valid_at: '生效时间'
+        desc: '备注'
+        instance_ids: '关联零件'
+        product_ids: '关联产品'
+      notice:
+        title: '标题'
+        content: '内容'
+        user_ids: '收信人'
+        need_reply: '需要回复'
+        model_val: '关联模块'
+      user_notice:
+        reply: '回复内容'
+      instance_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
+      product_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
+      technology_log:
+        develop_id: '研发审批'
+        flow_id: '流程化审批'
+        active_id: '最终审批'
+      matter:
+        name: '名称'
+        desc: '备注'
+
+
+
+
+

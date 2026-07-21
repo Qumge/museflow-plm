@@ -1,0 +1,83 @@
+<div class="row" id="matter-list">
+  <div class="col-12">
+    <div class="card">
+      <%= form_tag matters_path, method: :get do %>
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="card-title mb-0">
+            <%= t('titles.matters.index') %>
+            <% if can? :new, :matters %>
+              <%= link_to t('matters.add_link'), new_matter_path, class: 'btn btn-sm btn-success ms-2', data: { 'bs-toggle' => 'modal', 'bs-target' => '#global-modal' } %>
+            <% end %>
+          </h5>
+          <div class="input-group input-group-sm" style="width: 200px;">
+            <input type="text" name="table_search" class="form-control" placeholder="<%= t('common.search') %>" value="<%= params[:table_search] %>">
+            <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      <% end %>
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover mb-0">
+            <thead>
+              <tr>
+                <th><%= Matter.human_attribute_name(:name) %></th>
+                <th><%= t('common.creator') %></th>
+                <th><%= t('matters.last_changed_by') %></th>
+                <th><%= t('common.status') %></th>
+                <th><%= t('common.file') %></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if matters.present? %>
+                <% matters.each do |matter| %>
+                  <tr>
+                    <td>
+                      <% if can? :show, :matters %>
+                        <%= link_to matter.name, matter_path(matter) %>
+                      <% else %>
+                        <%= matter.name %>
+                      <% end %>
+                    </td>
+                    <td><%= matter.user&.name %></td>
+                    <td><%= matter.file_user&.name %></td>
+                    <td><%= status_badge(matter) %></td>
+                    <td>
+                      <% if matter.file_path.present? %>
+                        <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-secondary" data-url="<%= matter.preview_url %>" data-file-name="<%= matter.file_name %>">
+                          <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), matter %>
+                        </a>
+                        <%= link_to matter.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+                          <i class="fa fa-download"></i>
+                        <% end %>
+                      <% else %>
+                        <%= matter.file_name %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if can? :edit, :matters %>
+                        <%= link_to edit_matter_path(matter), class: 'btn btn-success btn-sm', data: { 'bs-toggle' => 'modal', 'bs-target' => '#global-modal' } do %>
+                          <i class="fa fa-edit"></i> <%= t('common.edit') %>
+                        <% end %>
+                      <% end %>
+                      <% if can? :destroy, :matters %>
+                        <%= link_to matter_path(matter), method: :delete, data: {confirm: t('common.confirm_delete')}, class: 'btn btn-danger btn-sm' do %>
+                          <i class="fa fa-close"></i> <%= t('common.delete') %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="6" class="text-center"><%= t('common.no_data') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <%= paginated_footer matters, params: { table_search: params[:table_search] } %>
+    </div>
+  </div>
+</div>

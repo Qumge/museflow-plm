@@ -1,0 +1,29 @@
+zh-CN:
+  titles:
+    products:
+      index: '产品列表'
+      new: '添加产品'
+      create: '添加产品'
+      edit: '修改产品'
+      update: '修改产品'
+      show: '产品详情'
+    instances:
+      index: '零件列表'
+      new: '添加零件'
+      create: '添加零件'
+      edit: '修改零件'
+      update: '修改零件'
+      show: '零件详情'
+    technologies:
+      index: '工艺文件列表'
+      new: '添加工艺文件'
+      create: '添加工艺文件'
+      edit: '修改工艺文件'
+      update: '修改工艺文件'
+      show: '工艺文件详情'
+    home:
+      index: '我的文件'
+      files_search: '内容搜索'
+    matters:
+      index: 'Bom单列表'
+      show: 'Bom单详情'

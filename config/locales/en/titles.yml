@@ -1,0 +1,29 @@
+en:
+  titles:
+    products:
+      index: 'Product List'
+      new: 'Add Product'
+      create: 'Add Product'
+      edit: 'Edit Product'
+      update: 'Edit Product'
+      show: 'Product Details'
+    instances:
+      index: 'Part List'
+      new: 'Add Part'
+      create: 'Add Part'
+      edit: 'Edit Part'
+      update: 'Edit Part'
+      show: 'Part Details'
+    technologies:
+      index: 'Process Document List'
+      new: 'Add Process Document'
+      create: 'Add Process Document'
+      edit: 'Edit Process Document'
+      update: 'Edit Process Document'
+      show: 'Process Document Details'
+    home:
+      index: 'My Files'
+      files_search: 'Content Search'
+    matters:
+      index: 'BOM Release List'
+      show: 'BOM Release Details'

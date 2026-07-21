@@ -1,0 +1,2 @@
+class InstancesUser < ApplicationRecord
+end

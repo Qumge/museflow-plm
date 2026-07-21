@@ -1,0 +1,113 @@
+en:
+  activerecord:
+    models:
+      role: 'Role'
+      organization: 'Organization'
+      resource: 'Resource'
+      user: 'User'
+      product: 'Product'
+      instance: 'Part'
+      technology: 'Process Document'
+      matter: 'BOM Release'
+      notice: 'Notice'
+      # rails_admin-only models (config.included_models in
+      # config/initializers/rails_admin.rb). P4 Task 7: rails_admin 3 reads
+      # activerecord.models/.attributes natively, so these need entries too
+      # now that the label/label_plural DSL has been removed from the
+      # initializer.
+      category: 'Product Type'
+      instance_category: 'Material Type'
+    attributes:
+      user:
+        login: 'Login'
+        email: 'Email'
+        password: 'Password'
+        phone: 'Phone Number'
+        password_confirmation: 'Confirm Password'
+        role_id: 'Role'
+        agent_id: 'Agent'
+        title: 'Title'
+        name: 'Name'
+        # Association field names (rails_admin's `field :organization` /
+        # `field :role` blocks), distinct from the *_id keys above which
+        # label the FK select on the regular (non-admin) user form.
+        organization: 'Department'
+        role: 'Role'
+      organization:
+        name: 'Organization Name'
+        desc: 'Notes'
+        created_at: 'Created At'
+        updated_at: 'Last Updated At'
+      role:
+        name: 'Role Name'
+        desc: 'Description'
+        resources: 'Permissions'
+      resource:
+        name: 'Description'
+        action: 'Action'
+        target: 'Module'
+      category:
+        name: 'Type Name'
+      instance_category:
+        name: 'Attribute Name'
+        desc: 'Notes'
+      product:
+        product_no: 'Product Number'
+        "no": 'Product Code'
+        name: 'Product Name'
+        reference_price: 'Unit Price'
+        unit: 'Unit'
+        brand: 'Brand'
+        norms: 'Specification'
+        market_price: 'Market Price'
+        acquisition_price: 'Procurement Price'
+        freight: 'Freight'
+        product_category_id: 'Product Type'
+        color: 'Color'
+        desc: 'Notes'
+        category_id: 'Product Type'
+        instance_ids: 'Related Parts'
+        user_ids: 'Drawing Visible To'
+        technology_id: 'Process Document'
+        organization_ids: 'Drawing Visible Departments'
+      instance:
+        instance_no: 'Part Number'
+        name: 'Part Name'
+        norms: 'Specification'
+        desc: 'Notes'
+        user_ids: 'Drawing Visible To'
+        technology_id: 'Process Document'
+        product_ids: 'Related Products'
+        organization_ids: 'Drawing Visible Departments'
+        parent_id: 'Parent Node'
+        instance_category_id: 'Material Type'
+      technology:
+        "no": 'Document Number'
+        name: 'Document Name'
+        valid_at: 'Effective Date'
+        desc: 'Notes'
+        instance_ids: 'Related Parts'
+        product_ids: 'Related Products'
+      notice:
+        title: 'Title'
+        content: 'Content'
+        user_ids: 'Recipients'
+        need_reply: 'Reply Required'
+        model_val: 'Related Item'
+      user_notice:
+        reply: 'Reply Content'
+      instance_log:
+        develop_id: 'Engineering Approval'
+        flow_id: 'Process Approval'
+        active_id: 'Final Approval'
+      product_log:
+        develop_id: 'Engineering Approval'
+        flow_id: 'Process Approval'
+        active_id: 'Final Approval'
+      technology_log:
+        develop_id: 'Engineering Approval'
+        flow_id: 'Process Approval'
+        active_id: 'Final Approval'
+      matter:
+        name: 'Name'
+        desc: 'Notes'

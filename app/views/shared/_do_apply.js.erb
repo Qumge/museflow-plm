@@ -1,0 +1,7 @@
+<% if @flag %>
+show_flash('success', '<%= t('flash.apply_success') %>');
+location.reload();
+<% else %>
+$('#form').replaceWith('<%= j render(partial: apply_form_partial) %>');
+<% end %>
+hideSpinner();

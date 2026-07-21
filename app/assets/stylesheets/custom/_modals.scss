@@ -1,0 +1,46 @@
+// Modal styles
+.modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.modal-header {
+  border-bottom: 1px solid $border-color;
+  padding: 16px 20px;
+
+  .modal-title {
+    font-weight: 600;
+    font-size: 1.0625rem;
+  }
+
+  .btn-close {
+    font-size: 0.875rem;
+  }
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  border-top: 1px solid $border-color;
+  padding: 12px 20px;
+}
+
+// File preview modal (fullscreen)
+#file-modal {
+  .modal-dialog {
+    max-width: 100%;
+    margin: 0;
+    height: 100%;
+  }
+  .modal-content {
+    height: 100%;
+    border-radius: 0;
+  }
+  .modal-body {
+    height: calc(100% - 56px);
+    padding: 0;
+  }
+}

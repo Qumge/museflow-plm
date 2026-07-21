@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title mb-0"><%= @user_notice&.notice&.title %></h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <h6><%= t('notices.sender') %>: <%= @user_notice&.notice&.user&.name %>
+            <span class="float-end text-muted"><%= simple_time_mini @user_notice.created_at %></span>
+          </h6>
+        </div>
+
+        <div class="mb-3">
+          <h6><%= Notice.human_attribute_name(:model_val) %>: <%= link_to @user_notice&.notice.get_model&.name, model_url(@user_notice&.notice) if @user_notice&.notice.get_model.present? %></h6>
+        </div>
+
+        <div class="mb-3">
+          <textarea class="form-control" rows="10" disabled><%= @user_notice&.notice.content %></textarea>
+        </div>
+
+        <% if @user_notice.replied %>
+          <div class="mb-3">
+            <h6><%= t('notices.my_reply') %>
+              <span class="float-end text-muted"><%= simple_time_mini @user_notice.replied_at %></span>
+            </h6>
+          </div>
+          <div class="mb-3">
+            <textarea class="form-control" rows="5" disabled><%= @user_notice&.reply %></textarea>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @user_notice&.notice&.file.present? %>
+        <div class="card-footer">
+          <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-secondary" data-url="<%= @user_notice&.notice&.file.preview_url %>" data-file-name="<%= @user_notice&.notice&.file.file_name %>">
+            <i class="fa fa-paperclip"></i> <%= show_file_name t('common.file'), @user_notice&.notice&.file %>
+          </a>
+        </div>
+      <% end %>
+
+      <div class="card-footer text-end">
+        <% if @user_notice&.notice.need_reply && !@user_notice.replied %>
+          <%= link_to reply_notice_path, data: { 'bs-toggle' => 'modal', 'bs-target' => '#global-modal' } do %>
+            <button type="button" class="btn btn-secondary">
+              <i class="fa fa-reply"></i> <%= t('notices.reply') %>
+            </button>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

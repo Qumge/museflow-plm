@@ -1,0 +1,55 @@
+// Main layout structure
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: $font-family-sans-serif;
+  background-color: $body-bg;
+}
+
+.app-wrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-content {
+  flex: 1;
+  margin-left: $sidebar-width;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+.sidebar-collapsed .app-content {
+  margin-left: 0;
+}
+
+.content-header {
+  padding: 16px 24px 0;
+}
+
+.content-body {
+  flex: 1;
+  padding: 16px 24px 24px;
+}
+
+// Spinner overlay
+.spinner {
+  display: block;
+  position: fixed;
+  z-index: 1200;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) 50% 50% no-repeat;
+  background-image: image-url('loading.gif');
+}
+
+// Breadcrumb
+.content-header .breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 0.875rem;
+}

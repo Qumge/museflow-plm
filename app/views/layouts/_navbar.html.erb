@@ -1,0 +1,13 @@
+<nav class="app-navbar">
+  <button type="button" class="navbar-toggle-btn">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <div class="navbar-right">
+    <div class="locale-switch">
+      <%= link_to "EN", locale_switch_path(:en), class: "locale-link#{' active' if I18n.locale == :en}" %>
+      <%= link_to "中文", locale_switch_path(:'zh-CN'), class: "locale-link#{' active' if I18n.locale == :'zh-CN'}" %>
+    </div>
+    <%= link_to t('common.logout'), destroy_user_session_path, method: :delete, class: "btn-logout" %>
+  </div>
+</nav>

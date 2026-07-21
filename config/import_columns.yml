@@ -1,0 +1,23 @@
+# Instance（零件）Excel 批量导入的表头契约（P4 Task 2f）。
+#
+# app/models/import/instance_importer.rb 曾把中文表头文字硬编码在
+# `column` 声明和逐格取值（row['物料代码'] 等）里——这是「用户上传 .xlsx
+# 的表头契约」，一旦表头文案被翻译，存量文件会全部导入失败（表头校验和
+# 取值全部匹配不上）。
+#
+# 这里把表头文案按 locale 拆出来，importer 只认下面的规范字段名
+# （level/code/name/norms/category），同时接受 zh 或 en 任一整套表头——
+# 不支持中英混填在同一个表头行里。翻译任务（后续 Task）只需要在这里加
+# 词条，不需要碰 importer 的业务逻辑。
+zh:
+  level: 层级
+  code: 物料代码
+  name: 物料名称
+  norms: 规格型号
+  category: 物料属性
+en:
+  level: Level
+  code: Material Code
+  name: Material Name
+  norms: Specification
+  category: Material Category

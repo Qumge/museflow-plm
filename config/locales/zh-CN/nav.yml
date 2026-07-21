@@ -1,0 +1,14 @@
+zh-CN:
+  nav:
+    console: '控制台'
+    home: '主页'
+    global_search: '全局搜索'
+    products: '产品'
+    instances: '零件'
+    technologies: '工艺文件'
+    audits: '审批'
+    matters: 'Bom单'
+    notices: '通知'
+    notices_receives: '收件箱'
+    notices_sends: '发件箱'
+    admin: '后台管理'

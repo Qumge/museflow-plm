@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+
+<%= render 'layouts/head' %>
+<%= javascript_include_tag 'application' %>
+
+<body>
+
+<div class="app-wrapper">
+  <%= render 'layouts/sidebar' %>
+
+  <div class="app-content">
+    <%= render 'layouts/navbar' %>
+
+    <div class="content-header">
+      <%= yield(:content_header) %>
+    </div>
+
+    <div class="content-body">
+      <%= yield %>
+    </div>
+
+    <%= render 'layouts/footer' %>
+  </div>
+</div>
+
+<%= render 'layouts/modal' %>
+<%= render 'layouts/tips' %>
+
+<div id="spinner"></div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div class="card">
+  <%= form_tag receives_notices_path, method: 'get' do %>
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="card-title mb-0">
+        <%= t('nav.notices_sends') %>
+        <% if can? :new, :notices %>
+          <%= link_to t('notices.send_link'), new_notice_path, class: 'btn btn-sm btn-success ms-2', data: { 'bs-toggle' => 'modal', 'bs-target' => '#global-modal' } %>
+        <% end %>
+      </h5>
+      <div class="input-group input-group-sm" style="width: 200px;">
+        <%= text_field_tag :table_search, params[:table_search], class: "form-control", placeholder: t('common.search') %>
+        <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="fa fa-search"></i></button>
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: 'notices/sends', locals: {notices: @send_notices} %>
+</div>

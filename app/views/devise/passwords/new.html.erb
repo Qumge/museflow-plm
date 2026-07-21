@@ -1,0 +1,23 @@
+<h5 class="mb-3 fw-bold"><%= t('devise_views.forgot_password') %></h5>
+
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="mb-3">
+    <%# no label: override — falls through to simple_form's automatic lookup,
+        which resolves to User.human_attribute_name(:email) via
+        config/locales/{en,zh-CN}/model.yml (P4 Task 5). %>
+    <%= f.input :email,
+                required: true,
+                autofocus: true,
+                input_html: { autocomplete: "email", class: "form-control" } %>
+  </div>
+
+  <div class="d-grid">
+    <%= f.button :submit, t('devise_views.send_reset_email'), class: "btn btn-primary btn-login" %>
+  </div>
+<% end %>
+
+<div class="devise-links">
+  <%= render "devise/shared/links" %>
+</div>

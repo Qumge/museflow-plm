@@ -1,0 +1,204 @@
+// Light neutral sidebar — P5 Task 8, area 1.
+//
+// Replaces the dark navy theme. Colour is reserved for approval-status
+// badges elsewhere in the app (see custom/_utilities.scss / the
+// status-badge rules); the sidebar itself — including its notice-count
+// badges — stays neutral grey per the "engineering tool" direction (see
+// .superpowers/sdd/task-7-8-report.md).
+.app-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: $sidebar-width;
+  background-color: $color-sidebar-bg;
+  border-right: 1px solid $color-border;
+  color: $color-text-muted;
+  z-index: 1030;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.3s ease;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $color-border;
+    border-radius: 2px;
+  }
+}
+
+.sidebar-collapsed .app-sidebar {
+  transform: translateX(-$sidebar-width);
+}
+
+// Sidebar brand/logo — an inline SVG mark drawn with `stroke="currentColor"`
+// (P5 logo fix; see app/views/shared/_logo_mark.html.erb), so it just takes
+// the ink colour directly instead of needing a dark background chip to
+// stay legible the way the old white-on-transparent PNG did.
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  height: $navbar-height;
+  border-bottom: 1px solid $color-border;
+
+  .sidebar-brand-mark {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    color: $color-text;
+  }
+
+  .brand-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $color-text;
+    white-space: nowrap;
+  }
+}
+
+// Sidebar user panel
+.sidebar-user {
+  padding: 16px 20px;
+  border-bottom: 1px solid $color-border;
+  display: flex;
+  align-items: center;
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: $color-text;
+    color: $color-page-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .user-info {
+    overflow: hidden;
+
+    .user-name {
+      color: $color-text;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-role {
+      color: $color-text-muted;
+      font-size: 0.75rem;
+    }
+  }
+}
+
+// Sidebar menu
+.sidebar-menu-label {
+  padding: 12px 20px 4px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: $color-text-muted;
+  font-weight: 600;
+}
+
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  > li {
+    > a {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      color: $color-text-muted;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: background-color 0.15s ease, color 0.15s ease;
+      position: relative;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+        color: $color-text;
+      }
+
+      i.fa {
+        width: 20px;
+        text-align: center;
+        margin-right: 12px;
+        font-size: 1rem;
+      }
+
+      .menu-badge {
+        margin-left: auto;
+
+        // Notice-count badges stay neutral, same rule as everything else
+        // in the sidebar — the only colour on this page is approval status.
+        .badge {
+          background-color: $color-sidebar-active-bg !important;
+          color: $color-text-muted !important;
+          font-weight: 600;
+        }
+      }
+
+      .menu-arrow {
+        margin-left: auto;
+        transition: transform 0.2s ease;
+        font-size: 0.75rem;
+      }
+    }
+
+    &.active > a {
+      background-color: $color-sidebar-active-bg;
+      color: $color-text;
+      font-weight: 600;
+    }
+  }
+}
+
+// Submenu
+.sidebar-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.02);
+
+  li a {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px 8px 52px;
+    color: $color-text-muted;
+    text-decoration: none;
+    font-size: 0.8125rem;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $color-text;
+    }
+
+    i.fa {
+      width: 16px;
+      text-align: center;
+      margin-right: 10px;
+      font-size: 0.875rem;
+    }
+  }
+
+  li.active a {
+    color: $color-text;
+    font-weight: 600;
+  }
+}
+
+// Collapsed submenu arrow rotation
+.sidebar-menu > li > a[aria-expanded="true"] .menu-arrow {
+  transform: rotate(-90deg);
+}

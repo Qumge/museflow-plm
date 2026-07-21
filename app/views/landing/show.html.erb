@@ -1,0 +1,52 @@
+<main class="landing-hero">
+  <h1 class="landing-tagline"><%= t('landing.tagline') %></h1>
+  <p class="landing-subtext"><%= t('landing.subtext') %></p>
+
+  <div class="landing-cta">
+    <%= link_to t('devise_views.sign_in'), new_user_session_path, class: 'btn btn-primary btn-landing' %>
+    <%= link_to t('landing.github'), 'https://github.com/xnjiang/museflow', class: 'btn btn-outline-secondary btn-landing', target: '_blank', rel: 'noopener' %>
+  </div>
+
+  <%# 界面示意：不是截图（本轮环境无法截图，用户已决定改用 CSS 画一个示意），
+      而是复用真实的 .mono / .status-badge 等 token 化样式类，让这块图形本身
+      就是"用同一套视觉语言画出来的界面"，不是脱节的营销插画。装饰性内容，
+      对屏幕阅读器隐藏。 %>
+  <div class="landing-mockup" aria-hidden="true">
+    <div class="mockup-window">
+      <nav class="mockup-sidebar">
+        <span class="mockup-nav-item mockup-nav-active"></span>
+        <span class="mockup-nav-item"></span>
+        <span class="mockup-nav-item"></span>
+        <span class="mockup-nav-item"></span>
+      </nav>
+      <div class="mockup-main">
+        <div class="mockup-toolbar">
+          <span class="mockup-title-bar"></span>
+          <span class="mockup-search"></span>
+        </div>
+        <div class="mockup-table">
+          <div class="mockup-row mockup-row-head">
+            <span class="mockup-bar mockup-bar-head"></span>
+            <span class="mockup-bar mockup-bar-head"></span>
+            <span class="mockup-bar mockup-bar-head"></span>
+          </div>
+          <div class="mockup-row">
+            <span class="mono">P-1024</span>
+            <span class="mockup-bar"></span>
+            <span class="status-badge status-released"><%= t('statuses.log_workflow.active') %></span>
+          </div>
+          <div class="mockup-row">
+            <span class="mono">I-2091</span>
+            <span class="mockup-bar"></span>
+            <span class="status-badge status-neutral"><%= t('statuses.log_workflow.apply') %></span>
+          </div>
+          <div class="mockup-row">
+            <span class="mono">T-0087</span>
+            <span class="mockup-bar"></span>
+            <span class="status-badge status-rejected"><%= t('statuses.log_workflow.failed') %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,12 @@
+<% content_for :content_header do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to audits_path do %>
+          <i class="fa fa-pencil"></i> <%= t('audits.breadcrumb_label') %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active"><%= get_title params %></li>
+    </ol>
+  </nav>
+<% end %>

@@ -1,0 +1,12 @@
+<% content_for :content_header do %>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <%= link_to root_path do %>
+          <i class="fa fa-dashboard"></i> <%= t('titles.home.index') %>
+        <% end %>
+      </li>
+      <li class="breadcrumb-item active"><%= get_title params %></li>
+    </ol>
+  </nav>
+<% end %>

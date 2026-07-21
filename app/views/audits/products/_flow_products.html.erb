@@ -1,0 +1,88 @@
+<div class="row" id="flow_products">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th><%= Product.human_attribute_name(:product_no) %></th>
+            <th><%= Product.human_attribute_name(:name) %></th>
+            <th><%= t('common.file_name') %></th>
+            <th><%= t('common.uploaded_by') %></th>
+            <th><%= t('common.submitted_at') %></th>
+            <th><%= t('common.status') %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @flow_product_logs.present? %>
+            <% @flow_product_logs.each do |product_log| %>
+            <tr>
+              <td>
+                <%= link_to product_log.product&.product_no, product_path(product_log.product), class: 'mono' %>
+              </td>
+              <td>
+                <%= product_log.product&.name %>
+              </td>
+              <td>
+                <% if product_log.file_path.present? %>
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= product_log.preview_url%>" data-file-name="<%= product_log.file_name %>">
+                    <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  product_log %>
+                  </a>
+                  <%= link_to product_log.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                    <i class="fa fa-download"></i>
+                  <% end %>
+                <% else %>
+                  <%= product_log.file_name %>
+                <% end %>
+              </td>
+              <td><%= product_log.user&.name %></td>
+              <td><%= simple_time_mini product_log.updated_at %></td>
+              <td><%= status_badge(product_log) %></td>
+              <td>
+                <% if can? :do_active_audit, :products %>
+                  <% if product_log.may_do_active_audit?  %>
+                    <%= link_to 'JavaScript:void(0)', onclick: "active(#{product_log.id})",class: 'btn btn-sm btn-success' do  %>
+                      <i class="fa fa-circle-o"></i><%= t('common.agree') %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <% if can? :do_failed_audit, :products %>
+                  <% if product_log.may_do_failed_audit? %>
+                    <%= link_to 'JavaScript:void(0)', onclick: "failed(#{product_log.id})",class: 'btn btn-sm btn-danger' do  %>
+                      <i class="fa fa-close"></i><%= t('common.reject') %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+              </td>
+            </tr>
+          <% end %>
+          <% else %>
+            <tr>
+              <td colspan="7" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+      function active(id){
+          if(confirm('<%= t('common.confirm_agree_final') %>')){
+              showSpinner();
+              $.ajax({
+                  type: 'post',
+                  url: '<%= do_active_audit_products_path %>',
+                  data: {id: id},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+
+      }
+
+  </script>
+</div>

@@ -1,0 +1,38 @@
+<div id="form">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= t('matters.notify_users') %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <%= simple_form_for(@matter, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body">
+      <div class="form-group row string required user_ids">
+        <label class="col-sm-3 col-form-label string required" for="user_ids"><%= t('matters.notify_users') %></label>
+        <div class="col-sm-9">
+          <%= select_tag :user_ids, options_for_select(User.all.collect{|user| ["#{user.organization&.name} / #{user.name}", user.id]}, params[:user_ids]), class: 'form-control select2', multiple: "multiple", style: 'width:100%' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag t('common.save'), class: 'btn btn-primary commit', data: { disable_with: t('common.saving') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+</div>
+<script>
+  $(function(){
+    $('.commit').click(function(){
+      if($('#user_ids').val()){
+        $.ajax({
+          type: 'PATCH',
+          url: '<%= send_notice_matter_path @matter %>',
+          data: {user_ids: $('#user_ids').val()},
+          dataType: 'script',
+          success: function (data) {
+          }
+        })
+      }
+    });
+    initSelect2($('.select2'));
+  });
+</script>

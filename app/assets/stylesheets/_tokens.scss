@@ -1,0 +1,47 @@
+// Visual tokens — P5 Task 7.
+//
+// "Engineering tool" direction, chosen by the user from three rendered
+// comps (dashboard-soft / engineering-tool / editorial-warm). The audience
+// is manufacturing engineers who spend their day scanning number columns
+// and approval status, so:
+//   1. Colour is reserved for approval status. Sidebar, buttons, links and
+//      cards stay neutral grey — see custom/_sidebar.scss, custom/_buttons
+//      rules in custom/_forms.scss, custom/_cards.scss.
+//   2. All identifiers (product/part/file numbers) render in the mono
+//      stack below — see the `.mono` utility added in Task 8 area 4.
+//   3. Tables are dense: $table-cell-padding-* below, ~35% tighter than
+//      the pre-P5 10px/12px.
+//
+// This file only *defines* values. Nothing consumes them yet — Task 8
+// wires each area to these names one commit at a time, so the first
+// visual change lands with the sidebar commit, not this one. It is
+// imported first in application.scss so custom/_variables.scss (which
+// feeds some of these into Bootstrap's own $primary/$link-color/etc.
+// before the Bootstrap import) can reference them by name.
+
+// ---- Surface & text ----------------------------------------------------
+$color-page-bg:            #fbfbfa; // page canvas
+$color-sidebar-bg:         #f2f2f0; // sidebar canvas
+$color-border:             #e3e3df; // structural dividers: sidebar edge, navbar rule, card border
+$color-text:               #1c1c1a; // body text; doubles as the neutral "dark action" colour for buttons/links
+$color-text-muted:         #7a7a72; // secondary text, table header labels
+$color-sidebar-active-bg:  #e6e6e1; // selected sidebar item background
+$color-row-border:         #eeeeea; // table row divider (lighter than $color-border on purpose)
+
+// ---- Approval status — the only colour budget in this UI ---------------
+$status-released-text: #2c5530;
+$status-released-bg:   #d9e8d9;
+$status-rejected-text: #7a3430;
+$status-rejected-bg:   #f0dcda;
+$status-neutral-text:  #4a4a44;
+$status-neutral-bg:    #e8e8e3;
+
+// ---- Type ---------------------------------------------------------------
+// Every identifier column (product/part/file numbers, BOM numbers) renders
+// in this stack so columns of numbers line up — see task-7-8-report.md.
+$font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+// ---- Density & shape ------------------------------------------------------
+$table-cell-padding-y: 7px;
+$table-cell-padding-x: 10px;
+$radius-sm: 4px;

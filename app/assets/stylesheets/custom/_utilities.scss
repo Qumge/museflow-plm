@@ -1,0 +1,189 @@
+// Utility classes
+
+// Identifiers (product/part/file numbers, BOM numbers) render in a mono
+// stack so a column of them lines up — an engineer scanning
+// "P-001 / I-001 / I-002" catches a mis-scan far faster when the digits
+// are fixed-width (P5 Task 8, area 4).
+.mono {
+  font-family: $font-mono;
+}
+
+// Shared base for the inline SVG brand mark (P5 logo fix) — sizing/colour
+// per site lives in .sidebar-brand-mark / .devise-logo-mark /
+// .landing-logo-mark, this just keeps the icon from being squashed by a
+// flex row.
+.logo-mark {
+  flex-shrink: 0;
+}
+
+// Approval-status badges — the only colour budget in this UI (P5 Task 8,
+// area 5). ApplicationHelper#status_badge picks one of the three variants
+// below from the record's underlying `status` value; everything that
+// isn't a "released" or "rejected" terminal state renders neutral.
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: $radius-sm;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-released {
+  color: $status-released-text;
+  background-color: $status-released-bg;
+}
+
+.status-rejected {
+  color: $status-rejected-text;
+  background-color: $status-rejected-bg;
+}
+
+.status-neutral {
+  color: $status-neutral-text;
+  background-color: $status-neutral-bg;
+}
+
+// Page tips / flash messages (toast-like)
+.page_tips {
+  width: 30%;
+  min-width: 200px;
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  text-align: center;
+
+  .success .inner {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+  }
+
+  .failed .inner {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+  }
+
+  .inner {
+    padding: 8px 16px;
+    display: inline-block;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    line-height: 1.5;
+
+    .close-tips {
+      margin-left: 8px;
+      cursor: pointer;
+      opacity: 0.6;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Badge overrides
+.badge {
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+// Button sizing
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 4px 10px;
+  border-radius: 5px;
+}
+
+// Action buttons in tables
+.table .btn-sm {
+  margin: 1px;
+}
+
+// Tip link
+.tip-link {
+  display: block;
+}
+
+// Tab customization — used on every detail page (shared/_show.html.erb),
+// the audits pages and the notices inbox/outbox card headers, so tokenised
+// here once rather than per page (P5 Task 9).
+.nav-tabs {
+  border-bottom: 2px solid $color-border;
+
+  .nav-link {
+    color: $color-text-muted;
+    font-weight: 500;
+    font-size: 0.875rem;
+    padding: 10px 16px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+
+    &:hover {
+      color: $color-text;
+      border-bottom-color: $color-border;
+    }
+
+    &.active {
+      color: $color-text;
+      border-bottom-color: $color-text;
+      background: transparent;
+    }
+  }
+}
+
+// Pagination
+.pagination {
+  .page-link {
+    border-radius: 6px;
+    margin: 0 2px;
+    font-size: 0.875rem;
+    color: #475569;
+    border-color: $border-color;
+  }
+
+  .page-item.active .page-link {
+    background-color: $primary;
+    border-color: $primary;
+  }
+}
+
+// Footer
+.app-footer {
+  padding: 12px 24px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  border-top: 1px solid $border-color;
+  text-align: center;
+}
+
+// Definition list for detail pages (basic-info tabs on the four business
+// lines, the notice detail page, and the version-history modal — P5 Task 9
+// tokenises the last of those three). Was hardcoded slate hex unrelated to
+// the token palette; now matches the same header-bg/muted-label/body-text
+// roles used by .table's own header everywhere else.
+.detail-table {
+  width: 100%;
+
+  th {
+    background-color: $color-sidebar-bg;
+    font-weight: 500;
+    color: $color-text-muted;
+    padding: 10px 16px;
+    width: 160px;
+    font-size: 0.8125rem;
+    border: 1px solid $color-border;
+  }
+
+  td {
+    padding: 10px 16px;
+    color: $color-text;
+    font-size: 0.875rem;
+    border: 1px solid $color-border;
+  }
+}

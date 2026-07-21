@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-10">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th><%= t('matters.countersign_participant') %></th>
+              <th><%= t('matters.countersign_time') %></th>
+              <th><%= t('common.status') %></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @matter.user_matters.each do |user_matter| %>
+              <tr>
+                <td><%= user_matter.user&.name %></td>
+                <td><%= simple_time_mini user_matter.updated_at %></td>
+                <td><%= user_matter.format_agree %></td>
+                <td>
+                  <% if current_user == user_matter.user && user_matter.agree.nil? %>
+                    <%= button_tag t('matters.countersign'), class: 'btn btn-sm btn-success commit', id: 'agree' if can? :countersign, :matters %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+      $(function(){
+          $('#agree').click(function(){
+              if(confirm('<%= t('matters.confirm_agree_countersign') %>')){
+                  showSpinner();
+                  $.ajax({
+                      type: "PATCH",
+                      url: '<%= agree_matter_path @matter %>',
+                      dataType: 'script',
+                      async: false,
+                      error: function(request) {
+                          alert("Connection error");
+                      },
+                      success: function(data) {
+                          //接收后台返回的结果
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+</div>

@@ -1,0 +1,42 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+# Bundler
+/.bundle
+
+# Editors / OS
+/.idea/
+/.vscode/
+.DS_Store
+
+# Secrets — never commit
+/.env
+/.env.*
+!/.env.example
+/config/master.key
+/config/credentials/*.key
+/config/settings.local.yml
+/config/settings/*.local.yml
+/config/environments/*.local.yml
+
+# SQLite
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Logs and tempfiles
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+
+# Coverage
+/coverage/
+
+# ActiveStorage local disk root
+/storage/*
+!/storage/.keep
+
+# Superpowers scratch (brainstorm mockups, sdd ledger)
+/.superpowers/
+
+# Precompiled assets are build output — Render and friends run assets:precompile at deploy time
+/public/assets/

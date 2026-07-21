@@ -1,0 +1,19 @@
+<div class="card">
+  <%= form_tag receives_notices_path, method: 'get' do %>
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 class="card-title mb-0"><%= t('nav.notices_receives') %></h5>
+      <div class="d-flex align-items-center">
+        <%= select_tag :status,
+              options_for_select(
+                [[t('statuses.notice_status.unread'), 'unread'], [t('statuses.notice_status.read'), 'read'], [t('statuses.notice_status.unreplied'), 'unreplied'], [t('statuses.notice_status.replied'), 'replied']],
+                params[:status]),
+              include_blank: t('notices.all_statuses'), class: "form-select form-select-sm me-2", style: "width: 140px;" %>
+        <div class="input-group input-group-sm" style="width: 200px;">
+          <%= text_field_tag :table_search, params[:table_search], class: "form-control", placeholder: t('common.search') %>
+          <button type="submit" class="btn btn-outline-secondary btn-sm"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= render partial: 'notices/receives', locals: {user_notices: @receive_notices} %>
+</div>

@@ -1,0 +1,7 @@
+zh-CN:
+  audits:
+    breadcrumb_label: '审批流程'
+    section_label: '审批'
+    products_review_title: '产品图纸审批'
+    instances_review_title: '零件图纸审批'
+    technologies_review_title: '工艺文件审批'

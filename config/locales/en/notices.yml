@@ -1,0 +1,13 @@
+en:
+  notices:
+    "yes": 'Yes'
+    "no": 'No'
+    receives_tab: 'Receive Notices'
+    sends_tab: 'Send Notices'
+    all_statuses: 'All Statuses'
+    no_data: 'No data'
+    reply: 'Reply'
+    reply_not_required: 'Reply Not Required'
+    send_link: 'Send Message'
+    sender: 'Sender'
+    my_reply: 'My Reply'

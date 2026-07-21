@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th><%= Technology.human_attribute_name(:no) %></th>
+                <th><%= Technology.human_attribute_name(:name) %></th>
+                <th><%= Technology.human_attribute_name(:valid_at) %></th>
+                <th><%= t('common.changed_at') %></th>
+                <th><%= t('common.drawing_creator') %></th>
+                <th><%= t('common.drawing') %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @technology.versions.present? %>
+                <% @technology.versions.each do |version| %>
+                  <% if version.reify.present? %>
+                    <tr>
+                      <td class="mono">
+                        <% if can? :show_version, :technologies %>
+                          <%= link_to version.reify.no, show_version_technology_path(version.reify, version_id: version.id), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal" %>
+                        <% else %>
+                          <%= version.reify.no %>
+                        <% end %>
+                      </td>
+                      <td><%= version.reify.name %></td>
+                      <td><%= simple_time version.reify.valid_at %></td>
+                      <td><%= simple_time_mini version.created_at %></td>
+                      <td><%= version.reify&.file_user&.name %></td>
+                      <td>
+                        <% if version.reify.file_path.present? %>
+                          <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= version.reify.preview_url%>" data-file-name="<%= version.reify.file_name %>">
+                            <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  version.reify %>
+                          </a>
+                          <%= link_to version.reify.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                            <i class="fa fa-download"></i>
+                          <% end %>
+                        <% end %>
+                      </td>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="6" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

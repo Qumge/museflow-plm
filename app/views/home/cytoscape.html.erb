@@ -1,0 +1,164 @@
+
+  <!-- demo src-->
+
+  <div id="cy" style="width:100%; min-height: 768px;" ></div>
+
+<script type="text/javascript">
+  $(function(){
+
+      var datas = [];
+      <% @products.each do |product| %>
+        datas.push({'data': {'id': 'product_<%= product.id %>', 'name': '<%= product.name  %>', 'real_id': '<%= product.id %>', 'type': 'product','color': '#367fa9', 'width': '100px', 'height': '100px'}, locked: false})
+      <% end %>
+      <% @instances.each do |instance| %>
+        datas.push({'data': {'id': 'instance_<%= instance.id %>', 'name': '<%= instance.name %>', 'real_id': '<%= instance.id %>', 'type': 'instance', 'color': '#00c0ef', 'width': '50px', 'height': '50px'}});
+      <% end %>
+      <% @technologies.each do |technology| %>
+        datas.push({'data': {'id': 'technology_<%= technology.id %>', 'name': '<%= technology.name %>', 'real_id': '<%= technology.id %>', 'type': 'technology', 'color': '#36393B', 'width': '75px', 'height': '75px'}})
+      <% end %>
+
+      <% @instances.each do |instance| %>
+        <% if instance.technology_id.present? %>
+          datas.push({'data': {'id': 'technology_instance_<%= instance.id %>', 'source': 'technology_<%= instance.technology_id %>', target: 'instance_<%=instance.id %>', 'color': '#dad4a2'}});
+        <% end %>
+      <% end %>
+
+      <% @products.each do |product| %>
+        <% if product.technology_id.present? %>
+          datas.push({'data': {'id': 'technology_products_<%= product.id %>', 'source': 'technology_<%= product.technology_id %>', target: 'product_<%=product.id %>', 'color': '#dad4a2'}});
+        <% end %>
+      <% end %>
+
+      <% @product_instances.each do |product_instance| %>
+        datas.push({'data': {'id': 'product_instance_<%= product_instance.id %>', 'source': 'product_<%= product_instance.product_id %>', 'target': 'instance_<%= product_instance.instance_id %>', 'color': '#9bd8de'}})
+      <% end %>
+      var cy = cytoscape({
+
+          container: document.getElementById('cy'), // container to render in
+
+          elements: datas,
+
+          style: [ // the stylesheet for the graph
+              {
+                  selector: 'node',
+                  style: {
+                      //'background-color': 'data(color)', //data(color)
+                      'width': 'data(width)',
+                      'height': 'data(height)',
+                      "content": "data(name)",
+                      "font-size": "18px",
+                      "text-valign": "center",
+                      "text-halign": "center",
+                      "background-color": "data(color)",
+                      "text-outline-color": "#555",
+                      "text-outline-width": "2px",
+                      "color": "#fff",
+                      "overlay-padding": "6px",
+                  }
+              },
+
+              {
+                  selector: 'edge',
+                  style: {
+                      'width': 1,
+                      'line-color': 'data(color)',
+                      'target-arrow-color': '#ccc',
+                      'target-arrow-shape': 'triangle'
+                  }
+              }
+          ],
+
+          layout: {
+              name: 'cola',
+              fit: true, // whether to fit the viewport to the graph
+              ready: undefined, // callback on layoutready
+              stop: undefined, // callback on layoutstop
+              rStepSize: 10, // the step size for increasing the radius if the nodes don't fit on screen
+              padding: 30, // the padding on fit
+              startAngle: 3/2 * Math.PI, // the position of the first node
+              counterclockwise: false
+          }
+      });
+      var makeTippy = function(node, html){
+          return tippy( node.popperRef(), {
+              html: html,
+              trigger: 'manual',
+              arrow: true,
+              placement: 'bottom',
+              hideOnClick: false,
+              interactive: true
+          } ).tooltips[0];
+      };
+      var t = function(text){
+          var el = document.createTextNode(text);
+
+          return el;
+      };
+      var h = function(tag, attrs, children){
+          var el = document.createElement(tag);
+
+          Object.keys(attrs).forEach(function(key){
+              var val = attrs[key];
+
+              el.setAttribute(key, val);
+          });
+
+          children.forEach(function(child){
+              el.appendChild(child);
+          });
+
+          return el;
+      };
+      var hideTippy = function(node){
+          var tippy = node.data('tippy');
+
+          if(tippy != null){
+              tippy.hide();
+          }
+      };
+
+      var hideAllTippies = function(){
+          cy.nodes().forEach(hideTippy);
+      };
+      cy.nodes().forEach(function(n){
+          var g = n.data('name');
+          var type = n.data('type');
+          var real_id = n.data('real_id');
+          var cytoscape_url = '/home/cytoscape?' + type + '_id=' + real_id;
+          var showUrl = ''
+          if(type === 'technology'){
+              showUrl = '/technologies/' + real_id;
+          }else if(type === 'product'){
+              showUrl = '/products/' + real_id;
+          }else if(type === 'instance'){
+              showUrl = '/instances/' + real_id;
+          }
+          var $links = [
+              {
+                  name: '<%= t('home.view_details') %>',
+                  url: showUrl
+              },
+              {
+                  name: '<%= t('home.show_related_only') %>',
+                  url: cytoscape_url
+              }
+
+          ].map(function( link ){
+              return h('a', { target: '_blank', href: link.url, 'class': 'tip-link' }, [ t(link.name) ]);
+          });
+
+          var tippy = makeTippy(n, h('div', {}, $links));
+
+          n.data('tippy', tippy);
+
+          n.on('click', function(e){
+              tippy.show();
+              cy.nodes().not(n).forEach(hideTippy);
+          });
+
+      });
+  });
+
+</script>
+
+

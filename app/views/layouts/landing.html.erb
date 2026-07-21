@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="utf-8">
+  <title>MuseFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="landing-page">
+  <header class="landing-topbar">
+    <div class="landing-brand">
+      <%= render 'shared/logo_mark', css_class: 'landing-logo-mark' %>
+      <span class="landing-brand-text"><strong>Muse</strong>Flow</span>
+    </div>
+    <div class="locale-switch">
+      <%= link_to "EN", locale_switch_path(:en), class: "locale-link#{' active' if I18n.locale == :en}" %>
+      <%= link_to "中文", locale_switch_path(:'zh-CN'), class: "locale-link#{' active' if I18n.locale == :'zh-CN'}" %>
+    </div>
+  </header>
+
+  <%= yield %>
+</body>
+</html>

@@ -1,0 +1,125 @@
+// Table styles — dense, scannable rows for a list this UI expects to run
+// to hundreds of records (P5 Task 8, area 3). Header text is small,
+// uppercase and muted; row dividers are lighter than the structural
+// $color-border used elsewhere; cell padding drops ~35% from the pre-P5
+// 10px/12px to the token's 7px/10px.
+.table {
+  font-size: 0.875rem;
+
+  > thead > tr > th {
+    border-bottom: 1px solid $color-border;
+    font-weight: 600;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.6875rem;
+    padding: $table-cell-padding-y $table-cell-padding-x;
+    white-space: nowrap;
+    background-color: $color-sidebar-bg;
+  }
+
+  > tbody > tr > td {
+    padding: $table-cell-padding-y $table-cell-padding-x;
+    vertical-align: middle;
+    border-top: 1px solid $color-row-border;
+    color: $color-text;
+  }
+
+  > tbody > tr:hover {
+    background-color: $color-sidebar-bg;
+  }
+}
+
+// Notices inbox/outbox use table-striped (P5 Task 9); Bootstrap's default
+// stripe is a plain rgba(black) tint that doesn't relate to the token
+// palette used everywhere else — replaced with a faint tint of the same
+// muted text colour so it stays subtle rather than reintroducing a second,
+// uncoordinated grey.
+.table-striped {
+  // Sass doesn't evaluate SassScript inside a custom-property value unless
+  // it's wrapped in #{} — without this it emits the literal, invalid
+  // string "rgba($color-text-muted, 0.06)".
+  --bs-table-striped-bg: #{rgba($color-text-muted, 0.06)};
+}
+
+.table-bordered {
+  > thead > tr > th,
+  > tbody > tr > td {
+    border: 1px solid $color-border;
+  }
+}
+
+// Tree table overrides
+.table.treetable {
+  > tbody > tr > td {
+    padding: $table-cell-padding-y $table-cell-padding-x;
+  }
+}
+
+// Server-rendered tree table (P5 Task 6): the "number" column cell carries
+// --depth (set inline per row) and indents by it; the toggle button rotates
+// to show expanded/collapsed state. See application.js for the click handler
+// and shared/_list.html.erb for the markup this pairs with.
+.table-tree {
+  .tree-cell {
+    display: inline-flex;
+    align-items: center;
+    padding-left: calc(var(--depth) * 26px);
+  }
+
+  .tree-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 4px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: $color-text-muted;
+    cursor: pointer;
+
+    i {
+      transition: transform 0.15s ease;
+    }
+
+    &:not(.collapsed) i {
+      transform: rotate(90deg);
+    }
+  }
+
+  .tree-toggle-spacer {
+    display: inline-block;
+    width: 22px;
+  }
+}
+
+// 全站取消 Bootstrap 的完整网格边框。
+//
+// .table-bordered 会给每个单元格都画边框，而这些表格几乎都嵌在 .card 里——
+// 网格线套在卡片边框内，看起来就像"表格里又套了一个表格"。工程工具的方向
+// 是靠横向分隔线区分行、靠留白区分列，不需要画格子。
+//
+// 在样式层统一处理，而不是去改 15 处视图：那些视图分属首页、历史版本、
+// 9 个审批 partial、文件记录表，逐个改既啰嗦又容易漏。
+.table-bordered {
+  --bs-table-border-width: 0;
+
+  > :not(caption) > * > * {
+    border-left-width: 0;
+    border-right-width: 0;
+  }
+
+  > thead > tr > th {
+    border-top-width: 0;
+  }
+}
+
+// 空状态：原来用 py-4（上下各 1.5rem）撑出一格很高的空白，在只有表头
+// 的页面上格外突兀。给一个克制的固定高度即可。
+.table .table-empty {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  color: $color-text-muted;
+}

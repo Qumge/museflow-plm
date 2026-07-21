@@ -1,0 +1,73 @@
+<%= render 'matters/header' %>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header p-0 pt-1">
+        <ul class="nav nav-tabs" role="tablist" data-turbolinks="false">
+          <li class="nav-item">
+            <a class="nav-link active" href="#tab_1" data-bs-toggle="tab" role="tab"><%= t('common.basic_info') %></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab_2" data-bs-toggle="tab" role="tab"><%= t('matters.file_history') %></a>
+          </li>
+          <% if @matter.status != 'circulation' %>
+          <li class="nav-item">
+            <a class="nav-link" href="#tab_3" data-bs-toggle="tab" role="tab"><%= t('matters.countersign') %></a>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="tab_1" role="tabpanel">
+            <%= render 'matters/detail' %>
+          </div>
+          <div class="tab-pane fade" id="tab_2" role="tabpanel">
+            <%= render 'matters/versions' %>
+          </div>
+          <% if @matter.status != 'circulation' %>
+          <div class="tab-pane fade" id="tab_3" role="tabpanel">
+            <%= render 'matters/countersign' %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer text-end">
+        <%= link_to t('matters.upload_bom_link'), upload_file_matter_path(@matter), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal", class: 'btn btn-success' if can? :upload_file, :matters %>
+        <%= link_to t('matters.routing_notice_link'), notices_matter_path(@matter), 'data-bs-toggle' => "modal", 'data-bs-target' => "#global-modal", class: 'btn btn-primary'  if(can?(:notices, :matters) && @matter.status == 'circulation')%>
+
+        <%= button_tag t('matters.start_countersign'), class: 'btn btn-danger commit', id: 'countersign' if(can?(:countersign, :matters) && @matter.status == 'circulation')%>
+        <%= link_to t('common.back'), matters_path, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <!-- /.card -->
+  </div>
+
+  <!-- 初始化按钮 start -->
+  <div class="col-md-12">
+  </div>
+  <!-- 初始化按钮 end -->
+  <!-- 初始化配置 start -->
+  <script type="text/javascript">
+      $(function(){
+          $('#countersign').click(function(){
+              if(confirm('<%= t('matters.confirm_start_countersign') %>')){
+                  showSpinner();
+                  $.ajax({
+                      type: "PATCH",
+                      url: '<%= countersign_matter_path @matter %>',
+                      dataType: 'script',
+                      async: false,
+                      error: function(request) {
+                          alert("Connection error");
+                      },
+                      success: function(data) {
+                          //接收后台返回的结果
+                      }
+                  });
+              }
+          });
+      });
+  </script>
+</div>

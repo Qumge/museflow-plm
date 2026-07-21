@@ -1,0 +1,47 @@
+<div class="modal-header">
+  <h5 class="modal-title"><%= t('common.version_details') %></h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+  <table class="table detail-table">
+    <tbody>
+    <tr>
+      <th style="width:50%"><%= Product.human_attribute_name(:product_no) %></th>
+      <td class="mono"><%= @version.reify&.product_no %></td>
+    </tr>
+    <tr>
+      <th><%= Product.human_attribute_name(:name) %></th>
+      <td><%= @version.reify&.name %></td>
+    </tr>
+    <tr>
+      <th><%= Product.human_attribute_name(:norms) %></th>
+      <td><%= @version.reify&.norms %></td>
+    </tr>
+    <tr>
+      <th><%= t('common.creator') %></th>
+      <td><%= @version.reify&.user&.name %></td>
+    </tr>
+    <tr>
+      <th><%= t('common.changed_at') %></th>
+      <td><%= simple_time @version.created_at %></td>
+    </tr>
+    <tr>
+      <th><%= t('common.drawing_changed_by') %></th>
+      <td><%= @version.reify&.file_user&.name %></td>
+    </tr>
+    <tr>
+      <th><%= t('common.drawing_effective_at') %></th>
+      <td><%= simple_time @version.reify&.active_at %></td>
+    </tr>
+    <tr>
+      <th><%= Product.human_attribute_name(:desc) %></th>
+      <td><%= @version.reify&.desc %></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+</div>

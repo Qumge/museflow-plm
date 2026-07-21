@@ -1,0 +1,13 @@
+zh-CN:
+  notices:
+    "yes": '是'
+    "no": '否'
+    receives_tab: '接收通知'
+    sends_tab: '发送通知'
+    all_statuses: '全部状态'
+    no_data: '无数据'
+    reply: '回复'
+    reply_not_required: '无需回复'
+    send_link: '发送信息'
+    sender: '发件人'
+    my_reply: '我的回复'

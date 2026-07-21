@@ -1,0 +1,14 @@
+en:
+  nav:
+    console: 'Console'
+    home: 'Home'
+    global_search: 'Global Search'
+    products: 'Products'
+    instances: 'Parts'
+    technologies: 'Process Documents'
+    audits: 'Approvals'
+    matters: 'BOM Releases'
+    notices: 'Notices'
+    notices_receives: 'Inbox'
+    notices_sends: 'Sent'
+    admin: 'Admin'

@@ -1,0 +1,14 @@
+en:
+  devise_views:
+    login: 'Login'
+    password: 'Password'
+    sign_in: 'Sign In'
+    forgot_contact_admin: 'Forgot your login or password? Please contact your administrator.'
+    forgot_password: 'Forgot Password'
+    send_reset_email: 'Send Password Reset Email'
+    change_password: 'Change Password'
+    minimum_chars: 'At least %{count} characters'
+    email: 'Email'
+    password_confirmation: 'Confirm Password'
+    sign_up: 'Sign Up'
+    registration_disabled: 'Self sign-up is disabled on this instance. Please contact your administrator for an account.'

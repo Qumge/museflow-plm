@@ -1,0 +1,32 @@
+<div class="card-body p-0">
+  <div class="d-flex justify-content-end p-2">
+    <%= paginate notices, params: {table_search: params[:table_search]}, theme: 'bootstrap-5' %>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-striped mb-0">
+      <tbody>
+      <% if notices.present? %>
+        <% notices.each do |notice| %>
+          <tr>
+            <td><%= link_to notice&.title, show_notice_notice_path(notice) %></td>
+            <td><%= notice.sub_content %></td>
+            <td><%= notice.need_reply ? Notice.human_attribute_name(:need_reply) : t('notices.reply_not_required') %></td>
+            <td><%= "#{notice.replied_users.size} / #{notice.readed_users.size} / #{notice.user_notices.size}" %></td>
+            <td>
+              <% if notice&.file&.present? %>
+                <i class="fa fa-paperclip"></i>
+              <% end %>
+            </td>
+            <td><%= simple_time_mini notice&.created_at %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td colspan="6"><%= t('notices.no_data') %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= paginated_footer notices, params: { table_search: params[:table_search] } %>

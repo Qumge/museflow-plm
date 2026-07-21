@@ -1,0 +1,16 @@
+en:
+  flash:
+    delete_success: 'Deleted successfully'
+    delete_failed: 'Delete failed'
+    not_found: 'Record not found'
+    unauthorized: 'You are not authorized to perform this action'
+    load_failed: 'Failed to load'
+    upload_processing: 'Upload successful, the data is being processed...'
+    incomplete_data: 'Incomplete data'
+    import_success: 'Imported successfully!'
+    create_success: 'Created successfully'
+    update_success: 'Updated successfully'
+    send_success: 'Sent successfully'
+    apply_success: 'Applied successfully'
+    change_success: 'Changed successfully'
+    change_failed: 'Change failed, please try again later'

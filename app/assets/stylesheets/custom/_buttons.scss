@@ -1,0 +1,49 @@
+// Neutral buttons — P5 Task 8, area 6.
+//
+// Colour is reserved for approval-status badges (see custom/_utilities.scss);
+// every button in this app, including the destructive ones, renders in the
+// same neutral scale. Solid "commit" actions (primary/success/danger/
+// warning/info — new/edit/apply/agree/delete/reject all end up here) get
+// the dark neutral fill; .btn-secondary (cancel/back/dismiss) gets a
+// lighter neutral fill so it reads as the lower-emphasis action; outline
+// buttons (preview/download/search) get a muted neutral outline. Built with
+// Bootstrap's own button-variant/button-outline-variant mixins so hover/
+// active/focus/disabled states are generated correctly instead of just
+// overriding the resting background colour.
+.btn-primary,
+.btn-success,
+.btn-danger,
+.btn-warning,
+.btn-info {
+  @include button-variant($color-text, $color-text);
+}
+
+.btn-secondary {
+  @include button-variant($color-text-muted, $color-text-muted);
+}
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  @include button-outline-variant($color-text-muted);
+}
+
+// 行内操作（编辑 / 删除）是低强调动作——把它们做成实心深色会让每一行
+// 都在视觉上和卡片头的主操作抢注意力，几十行列表下来非常吵。改为轻量描边。
+//
+// 破坏性操作必须与普通操作可区分：编辑和删除长得一模一样是可用性问题，
+// 不是审美问题。这里用一点克制的红——它只在悬停时出现，是描边而非填充，
+// 不会和状态徽章（实心药丸）抢"这是状态"的语义。
+.btn-row-action {
+  --bs-btn-padding-y: 0.15rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.75rem;
+}
+
+.btn-row-danger {
+  &:hover,
+  &:focus {
+    color: $status-rejected-text;
+    border-color: $status-rejected-text;
+    background-color: $status-rejected-bg;
+  }
+}

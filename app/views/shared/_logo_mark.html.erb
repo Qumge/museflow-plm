@@ -1,0 +1,17 @@
+<%# Inline SVG wordmark — replaces logo_white.png, a pure-white PNG bitmap
+    (avg. luminance 251/255) that batch C's sidebar recolour (light
+    #f2f2f0) made effectively invisible on its own background.
+
+    Drawn with `stroke="currentColor"` so it inherits whatever `color` its
+    container sets — the same markup works unmodified on the light sidebar,
+    the light devise/landing chrome, or a dark surface, with no background
+    "chip" hack needed to fake contrast for a white-only asset. Scales to
+    any size without blurring and ships as zero bytes over the wire (no
+    network request at all — it's inlined HTML, not an <img src>).
+
+    css_class (optional): extra class for site-specific sizing/spacing;
+    see .sidebar-brand-mark / .devise-logo-mark / .landing-logo-mark. %>
+<svg class="logo-mark <%= local_assigns[:css_class] %>" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MuseFlow">
+  <rect x="1.5" y="1.5" width="29" height="29" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path d="M9 23V9l7 7 7-7v14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

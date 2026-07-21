@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <title>MuseFlow</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="devise-page">
+  <div class="devise-card">
+    <div class="locale-switch devise-locale-switch">
+      <%= link_to "EN", locale_switch_path(:en), class: "locale-link#{' active' if I18n.locale == :en}" %>
+      <%= link_to "中文", locale_switch_path(:'zh-CN'), class: "locale-link#{' active' if I18n.locale == :'zh-CN'}" %>
+    </div>
+    <div class="devise-logo">
+      <%= render 'shared/logo_mark', css_class: 'devise-logo-mark' %>
+      <h1><strong>Muse</strong>Flow</h1>
+      <p><%= t('layouts.welcome_tagline') %></p>
+    </div>
+    <%= yield %>
+  </div>
+</body>
+</html>

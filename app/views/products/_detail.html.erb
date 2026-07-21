@@ -1,0 +1,85 @@
+<div class="row">
+  <div class="col-md-6">
+    <table class="table detail-table">
+      <tbody>
+      <tr>
+        <th><%= Product.human_attribute_name(:product_no) %></th>
+        <td class="mono"><%= @product.product_no %></td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:name) %></th>
+        <td><%= @product.name %></td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:norms) %></th>
+        <td><%= @product.norms %></td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:desc) %></th>
+        <td><%= @product.desc %></td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:user_ids) %></th>
+        <td>
+          <% @product.users.each do |user| %>
+            <span class="badge bg-primary"><%= user.name %></span>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing') %></th>
+        <td>
+          <% if @product.file_path.present? && current_user.can_view?(@product) %>
+            <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= @product.preview_url %>" data-file-name="<%= @product.file_name %>">
+              <i class="fa fa-eye"></i> <%= show_file_name t('common.file'), @product %>
+            </a>
+            <%= link_to @product.download_url, class: 'btn btn-sm btn-outline-secondary' do %>
+              <i class="fa fa-download"></i>
+            <% end %>
+          <% else %>
+            <%= @product.file_name %>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table detail-table">
+      <tbody>
+      <tr>
+        <th><%= t('common.creator') %></th>
+        <td><%= @product&.user&.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.created_at') %></th>
+        <td><%= simple_time @product.created_at %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing_changed_by') %></th>
+        <td><%= @product&.file_user&.name %></td>
+      </tr>
+      <tr>
+        <th><%= t('common.drawing_changed_at') %></th>
+        <td><%= simple_time @product.last_updated_at %></td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:organization_ids) %></th>
+        <td>
+          <% @product.organizations.each do |org| %>
+            <span class="badge bg-primary"><%= org.name %></span>
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <th><%= Product.human_attribute_name(:instance_ids) %></th>
+        <td>
+          <% @product.instances.each do |instance| %>
+            <span class="badge bg-primary"><%= "#{instance.instance_no} / #{instance.name}" %></span>
+          <% end %>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

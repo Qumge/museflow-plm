@@ -1,0 +1,2 @@
+class ProductOrganization < ApplicationRecord
+end

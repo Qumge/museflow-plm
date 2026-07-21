@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h5 class="modal-title"><%= t('common.bom_batch_import') %></h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<%= form_tag(do_import_instances_path, multipart: true) do %>
+  <div class="modal-body">
+    <%# 表头文字、列顺序、必填/选填标记均取自 Import::InstanceImporter 与
+        config/import_columns.yml——与实际校验的表头契约保持单一数据源，
+        避免这份示例表格与 importer 的真实要求各自漂移。%>
+    <table class="table table-sm table-bordered">
+      <thead>
+        <tr>
+          <% Import::InstanceImporter::FIELDS.each do |field| %>
+            <th><%= Import::InstanceImporter.title_for(field, I18n.locale == :'zh-CN' ? :zh : :en) %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% Import::InstanceImporter::FIELDS.each do |field| %>
+            <td><%= Import::InstanceImporter::REQUIRED_CONTENT_FIELDS.include?(field) ? t('instances.import.required') : t('instances.import.optional') %></td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li><%= t('instances.import.header_note') %></li>
+      <li><%= t('instances.import.category_note') %></li>
+      <li><%= t('instances.import.code_note') %></li>
+    </ul>
+
+    <p class="py-4"><%= file_field_tag :file, accept: 'application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' %></p>
+  </div>
+
+  <div class="modal-footer">
+    <%= submit_tag t('common.save'), class: 'btn btn-primary', data: { disable_with: t('common.processing') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+<% end %>

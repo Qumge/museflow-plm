@@ -1,0 +1,9 @@
+en:
+  instances:
+    import_link: 'BOM Import'
+    import:
+      required: 'Required'
+      optional: 'Optional'
+      header_note: 'The table layout is shown above; the header row (row 1) must match it exactly'
+      category_note: 'Material Type must be entered into the system beforehand'
+      code_note: 'Material Code uniquely identifies a part; importing a duplicate updates its existing record'

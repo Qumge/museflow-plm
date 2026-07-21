@@ -1,0 +1,88 @@
+<div class="row" id="apply_instances">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th><%= Instance.human_attribute_name(:instance_no) %></th>
+            <th><%= Instance.human_attribute_name(:name) %></th>
+            <th><%= t('common.file_name') %></th>
+            <th><%= t('common.uploaded_by') %></th>
+            <th><%= t('common.submitted_at') %></th>
+            <th><%= t('common.status') %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @apply_instance_logs.present? %>
+            <% @apply_instance_logs.each do |instance_log| %>
+            <tr>
+              <td>
+                <%= link_to instance_log.instance&.instance_no, instance_path(instance_log.instance), class: 'mono' %>
+              </td>
+              <td>
+                <%= instance_log.instance&.name %>
+              </td>
+              <td>
+                <% if instance_log.file_path.present? %>
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= instance_log.preview_url%>" data-file-name="<%= instance_log.file_name %>">
+                    <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  instance_log %>
+                  </a>
+                  <%= link_to instance_log.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                    <i class="fa fa-download"></i>
+                  <% end %>
+                <% else %>
+                  <%= instance_log.file_name %>
+                <% end %>
+              </td>
+              <td><%= instance_log.user&.name %></td>
+              <td><%= simple_time_mini instance_log.updated_at %></td>
+              <td><%= status_badge(instance_log) %></td>
+              <td>
+                <% if can? :do_develop_audit, :instances %>
+                  <% if instance_log.may_do_develop_audit? %>
+                    <%= link_to 'JavaScript:void(0)', onclick: "develop(#{instance_log.id})",class: 'btn btn-sm btn-success' do  %>
+                      <i class="fa fa-circle-o"></i><%= t('common.agree') %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+                <% if can? :do_failed_audit, :instances %>
+                  <% if instance_log.may_do_failed_audit? %>
+                    <%= link_to 'JavaScript:void(0)', onclick: "failed(#{instance_log.id})",class: 'btn btn-sm btn-danger' do  %>
+                      <i class="fa fa-close"></i><%= t('common.reject') %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+
+              </td>
+            </tr>
+          <% end %>
+          <% else %>
+            <tr>
+              <td colspan="7" class="text-center text-muted table-empty"><%= t('common.no_data') %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript">
+      function develop(id){
+          if(confirm('<%= t('common.confirm_agree') %>')){
+              showSpinner();
+              $.ajax({
+                  type: 'post',
+                  url: '<%= do_develop_audit_instances_path %>',
+                  data: {id: id},
+                  dataType: 'script',
+                  success: function (data) {
+
+                  }
+              })
+          }
+
+      }
+
+  </script>
+</div>

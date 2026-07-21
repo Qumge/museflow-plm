@@ -1,0 +1,65 @@
+<%= render 'audits/header' %>
+<div class="row">
+  <% if can? :products, :audits %>
+    <div class="col-lg-4 col-md-6 mb-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="stat-label"><%= t('audits.section_label') %></div>
+              <h5 class="mb-0 fw-bold"><%= t('audits.products_review_title') %></h5>
+            </div>
+            <i class="fa fa-leaf fa-2x opacity-50"></i>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent">
+          <%= link_to products_audits_path, class: 'text-decoration-none' do %>
+            <%= t('common.details') %> <i class="fa fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can? :instances, :audits %>
+    <div class="col-lg-4 col-md-6 mb-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="stat-label"><%= t('audits.section_label') %></div>
+              <h5 class="mb-0 fw-bold"><%= t('audits.instances_review_title') %></h5>
+            </div>
+            <i class="fa fa-cogs fa-2x opacity-50"></i>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent">
+          <%= link_to instances_audits_path, class: 'text-decoration-none' do %>
+            <%= t('common.details') %> <i class="fa fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can? :technologies, :audits %>
+    <div class="col-lg-4 col-md-6 mb-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="stat-label"><%= t('audits.section_label') %></div>
+              <h5 class="mb-0 fw-bold"><%= t('audits.technologies_review_title') %></h5>
+            </div>
+            <i class="fa fa-file-text fa-2x opacity-50"></i>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent">
+          <%= link_to technologies_audits_path, class: 'text-decoration-none' do %>
+            <%= t('common.details') %> <i class="fa fa-arrow-circle-right"></i>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

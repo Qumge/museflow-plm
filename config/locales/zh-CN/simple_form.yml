@@ -1,0 +1,9 @@
+zh-CN:
+  simple_form:
+    labels:
+      user:
+        edit:
+          # 对应 devise/passwords/edit.html.erb（找回密码表单）——该场景下
+          # “新密码”/“确认新密码”比 User 模型本身的“密码”/“重复密码”更贴切。
+          password: '新密码'
+          password_confirmation: '确认新密码'

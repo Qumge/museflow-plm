@@ -1,0 +1,29 @@
+// Theme color variables
+// Sidebar colours now come from the tokens in _tokens.scss (P5 Task 8,
+// area 1: custom/_sidebar.scss) — only layout dimensions live here.
+$sidebar-width: 260px;
+$sidebar-collapsed-width: 0px;
+
+// $primary feeds Bootstrap's own $link-color by default, so repointing it
+// here (P5 Task 8, area 6) is what turns every plain <a> neutral dark too
+// — colour stays reserved for approval-status badges. custom/_buttons.scss
+// separately re-skins the .btn-* components themselves, since Bootstrap's
+// button-variant mixin needs the raw background fed straight to it rather
+// than picked up through $success/$danger/etc (those stay default so
+// unrelated things like alert-danger/invalid-feedback keep their expected
+// colour).
+$primary: $color-text;
+$success: #22c55e;
+$warning: #f59e0b;
+$danger: #ef4444;
+$info: #06b6d4;
+
+// Page canvas — wired to the token here (area 2, navbar) since the
+// navbar's own background is required to match it exactly.
+$body-bg: $color-page-bg;
+$content-bg: #ffffff;
+
+$navbar-height: 56px;
+$border-color: #e2e8f0;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif;

@@ -1,0 +1,68 @@
+<%= render 'notices/header' %>
+<div class="row">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive col-sm-10">
+          <table class="table detail-table">
+            <tbody>
+            <tr>
+              <th><%= Notice.human_attribute_name(:title) %></th>
+              <td><%= @notice.title %></td>
+            </tr>
+            <tr>
+              <th><%= Notice.human_attribute_name(:model_val) %></th>
+              <td><%= link_to @notice.get_model&.name, model_url(@notice) if @notice.get_model.present? %></td>
+            </tr>
+            <tr>
+              <th><%= Notice.human_attribute_name(:content) %></th>
+              <td><%= @notice.content %></td>
+            </tr>
+            <tr>
+              <th><%= Notice.human_attribute_name(:need_reply) %></th>
+              <td><%= @notice.need_reply ? t('notices.yes') : t('notices.no') %></td>
+            </tr>
+            <tr>
+              <th><%= t('common.attachment') %></th>
+              <td>
+                <% if @notice&.file.present? %>
+                  <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-secondary" data-url="<%= @notice&.file.preview_url %>" data-file-name="<%= @notice&.file.file_name %>">
+                    <i class="fa fa-paperclip"></i> <%= show_file_name t('common.file'), @notice&.file %>
+                  </a>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th><%= Notice.human_attribute_name(:user_ids) %></th>
+              <td>
+                <% @notice.users.each do |user| %>
+                  <span class="badge bg-primary"><%= user.name %></span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th><%= t('statuses.notice_status.read') %></th>
+              <td>
+                <% @notice.readed_users.each do |user_notice| %>
+                  <span class="badge bg-primary"><%= user_notice&.user&.name %></span>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <th><%= t('statuses.notice_status.replied') %></th>
+              <td>
+                <% @notice.replied_users.each do |user_notice| %>
+                  <p class="mb-1">
+                    <strong><%= user_notice&.user&.name %>:</strong>
+                    <%= user_notice.reply %>
+                  </p>
+                <% end %>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

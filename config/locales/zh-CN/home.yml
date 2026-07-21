@@ -1,0 +1,5 @@
+zh-CN:
+  home:
+    view_details: '查看详情'
+    show_related_only: '只显示当前关联'
+    no_role_notice: '你的账号尚未分配角色，暂时没有可查看的内容，请联系管理员开通权限。'

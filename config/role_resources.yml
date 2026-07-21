@@ -1,0 +1,217 @@
+---
+develop_manager:
+  home:
+    index: Home - My Files
+    cytoscape: File Relationship Diagram
+    files_search: Global Search
+  products:
+    index: Product - List
+    show: Product - Details
+    new: Product - New Form
+    create: Product - Create
+    edit: Product - Edit Form
+    update: Product - Update
+    destroy: Product - Delete
+    show_version: Product - Version History
+    upload_file: Product - Upload Drawing Form
+    do_upload_file: Product - Upload Drawing
+    edit_file: Product - Edit Drawing Form
+    update_file: Product - Update Drawing
+    apply: Product - Apply for Approval
+    do_apply: Product - Submit for Approval
+    do_develop_audit: Product Approval - Engineering Approval
+    do_failed_audit: Product Approval - Reject
+    import: Product - BOM Import Form
+    do_import: Product - BOM Import
+    view_all_logs: Product - All File Records
+  instances:
+    index: Part - List
+    show: Part - Details
+    new: Part - New Form
+    create: Part - Create
+    edit: Part - Edit Form
+    update: Part - Update
+    destroy: Part - Delete
+    show_version: Part - Version History
+    upload_file: Part - Upload Drawing Form
+    do_upload_file: Part - Upload Drawing
+    edit_file: Part - Edit Drawing Form
+    update_file: Part - Update Drawing
+    apply: Part - Apply for Approval
+    do_apply: Part - Submit for Approval
+    do_develop_audit: Part Approval - Engineering Approval
+    do_failed_audit: Part Approval - Reject
+    import: Part - BOM Import Form
+    do_import: Part - BOM Import
+    view_all_logs: Part - All File Records
+  technologies:
+    index: Process Document - List
+    show: Process Document - Details
+    new: Process Document - New Form
+    create: Process Document - Create
+    edit: Process Document - Edit Form
+    update: Process Document - Update
+    destroy: Process Document - Delete
+    show_version: Process Document - Version History
+    upload_file: Process Document - Upload Drawing Form
+    do_upload_file: Process Document - Upload Drawing
+    edit_file: Process Document - Edit Drawing Form
+    update_file: Process Document - Update Drawing
+    apply: Process Document - Apply for Approval
+    do_apply: Process Document - Submit for Approval
+    do_develop_audit: Process Document Approval - Engineering Approval
+    do_failed_audit: Process Document Approval - Reject
+    view_all_logs: Process Document - All File Records
+  audits:
+    index: Approvals - Dashboard
+    products: Approvals - Product Approval
+    instances: Approvals - Part Approval
+    technologies: Approvals - Process Document Approval
+  notices:
+    index: Notices - List
+    receives: Notices - Inbox
+    sends: Notices - Outbox
+    show_notice: Notices - Statistics Details
+    reply: Notices - Reply Form
+    do_reply: Notices - Reply
+    new: Notices - Send Form
+    create: Notices - Send
+    edit: Notices - Edit Form
+    update: Notices - Edit
+    show: Notices - Details
+  matters:
+    index: BOM Release - List
+    show: BOM Release - Details
+    new: BOM Release - New Form
+    create: BOM Release - Create
+    edit: BOM Release - Edit Form
+    update: BOM Release - Update
+    destroy: BOM Release - Delete
+    upload_file: BOM Release - Upload File Form
+    do_upload_file: BOM Release - Upload File
+    notices: BOM Release - Routing Notice Form
+    send_notice: BOM Release - Routing Notice
+    countersign: BOM Release - Initiate Countersign
+    agree: BOM Release - Confirm Countersign
+developer:
+  home:
+    index: Home - My Files
+    cytoscape: File Relationship Diagram
+    files_search: Global Search
+  products:
+    index: Product - List
+    show: Product - Details
+    show_version: Product - Version History
+    upload_file: Product - Upload Drawing Form
+    do_upload_file: Product - Upload Drawing
+    edit_file: Product - Edit Drawing Form
+    update_file: Product - Update Drawing
+    apply: Product - Apply for Approval
+    do_apply: Product - Submit for Approval
+  instances:
+    index: Part - List
+    show: Part - Details
+    show_version: Part - Version History
+    upload_file: Part - Upload Drawing Form
+    do_upload_file: Part - Upload Drawing
+    edit_file: Part - Edit Drawing Form
+    update_file: Part - Update Drawing
+    apply: Part - Apply for Approval
+    do_apply: Part - Submit for Approval
+  technologies:
+    index: Process Document - List
+    show: Process Document - Details
+    show_version: Process Document - Version History
+    upload_file: Process Document - Upload Drawing Form
+    do_upload_file: Process Document - Upload Drawing
+    edit_file: Process Document - Edit Drawing Form
+    update_file: Process Document - Update Drawing
+    apply: Process Document - Apply for Approval
+    do_apply: Process Document - Submit for Approval
+  notices:
+    index: Notices - List
+    receives: Notices - Inbox
+    sends: Notices - Outbox
+    show_notice: Notices - Statistics Details
+    reply: Notices - Reply Form
+    do_reply: Notices - Reply
+    new: Notices - Send Form
+    create: Notices - Send
+    edit: Notices - Edit Form
+    update: Notices - Edit
+    show: Notices - Details
+  matters:
+    index: BOM Release - List
+    show: BOM Release - Details
+    new: BOM Release - New Form
+    create: BOM Release - Create
+    edit: BOM Release - Edit Form
+    update: BOM Release - Update
+    destroy: BOM Release - Delete
+    upload_file: BOM Release - Upload File Form
+    do_upload_file: BOM Release - Upload File
+    notices: BOM Release - Routing Notice Form
+    send_notice: BOM Release - Routing Notice
+    countersign: BOM Release - Initiate Countersign
+    agree: BOM Release - Confirm Countersign
+processer:
+  home:
+    index: Home - My Files
+    cytoscape: File Relationship Diagram
+    files_search: Global Search
+  products:
+    index: Product - List
+    show: Product - Details
+    show_version: Product - Version History
+    do_flow_audit: Product Approval - Process Approval
+    do_active_audit: Product Approval - Final Approval
+    do_failed_audit: Product Approval - Reject
+    import: Product - BOM Import Form
+    do_import: Product - BOM Import
+  instances:
+    index: Part - List
+    show: Part - Details
+    show_version: Part - Version History
+    do_flow_audit: Part Approval - Process Approval
+    do_active_audit: Part Approval - Final Approval
+    do_failed_audit: Part Approval - Reject
+    import: Part - BOM Import Form
+    do_import: Part - BOM Import
+  technologies:
+    index: Process Document - List
+    show: Process Document - Details
+    show_version: Process Document - Version History
+    do_flow_audit: Process Document Approval - Process Approval
+    do_active_audit: Process Document Approval - Final Approval
+    do_failed_audit: Process Document Approval - Reject
+  audits:
+    index: Approvals - Dashboard
+    products: Approvals - Product Approval
+    instances: Approvals - Part Approval
+    technologies: Approvals - Process Document Approval
+  notices:
+    index: Notices - List
+    receives: Notices - Inbox
+    sends: Notices - Outbox
+    show_notice: Notices - Statistics Details
+    reply: Notices - Reply Form
+    do_reply: Notices - Reply
+    new: Notices - Send Form
+    create: Notices - Send
+    edit: Notices - Edit Form
+    update: Notices - Edit
+    show: Notices - Details
+  matters:
+    index: BOM Release - List
+    show: BOM Release - Details
+    new: BOM Release - New Form
+    create: BOM Release - Create
+    edit: BOM Release - Edit Form
+    update: BOM Release - Update
+    destroy: BOM Release - Delete
+    upload_file: BOM Release - Upload File Form
+    do_upload_file: BOM Release - Upload File
+    notices: BOM Release - Routing Notice Form
+    send_notice: BOM Release - Routing Notice
+    countersign: BOM Release - Initiate Countersign
+    agree: BOM Release - Confirm Countersign

@@ -1,0 +1,9 @@
+<% if @flag %>
+var modal = bootstrap.Modal.getInstance(document.getElementById('global-modal'));
+if(modal) modal.hide();
+show_flash('success', '<%= message %>');
+location.reload();
+<% else %>
+hideSpinner();
+$('#form').html('<%= j render(partial: form_partial) %>');
+<% end %>

@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table detail-table">
+        <tbody>
+        <tr>
+          <th style="width:50%"><%= Technology.human_attribute_name(:no) %></th>
+          <td class="mono"><%= @technology.no %></td>
+        </tr>
+        <tr>
+          <th><%= Technology.human_attribute_name(:name) %></th>
+          <td><%= @technology.name %></td>
+        </tr>
+        <tr>
+          <th><%= Technology.human_attribute_name(:valid_at) %></th>
+          <td><%= simple_time @technology.valid_at %></td>
+        </tr>
+        <tr>
+          <th>
+            <%= t('common.drawing') %>
+          </th>
+          <td>
+            <% if @technology.file_path.present?%>
+              <a href="javascript:void(0)" onclick="show_file(this)" class="btn btn-sm btn-outline-primary" data-url="<%= @technology.preview_url%>" data-file-name="<%= @technology.file_name %>">
+                <i class="fa fa-eye"></i><%= show_file_name t('common.file'),  @technology %>
+              </a>
+              <%= link_to @technology.download_url, class: 'btn btn-sm btn-outline-secondary' do  %>
+                <i class="fa fa-download"></i>
+              <% end %>
+            <% else %>
+              <%= @technology.file_name %>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="table-responsive">
+      <table class="table detail-table">
+        <tbody>
+        <tr>
+          <th><%= t('common.creator') %></th>
+          <td><%= @technology&.user&.name %></td>
+        </tr>
+        <tr>
+          <th><%= t('common.created_at') %></th>
+          <td><%= simple_time @technology.created_at %></td>
+        </tr>
+        <tr>
+          <th><%= Technology.human_attribute_name(:desc) %></th>
+          <td><%= @technology.desc %></td>
+        </tr>
+        <tr>
+          <th><%= Technology.human_attribute_name(:instance_ids) %></th>
+          <td>
+            <% @technology.instances.each do |instance| %>
+              <span class="badge bg-primary" style="padding-bottom: 2px;padding-top: 2px;"><%= instance.name %></span>
+            <% end %>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

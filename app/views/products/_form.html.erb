@@ -1,0 +1,40 @@
+<div id="form">
+  <div class="modal-header">
+    <h5 class="modal-title"><%= t('activerecord.models.product') %></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <%= simple_form_for(@product, html: {class: 'form-horizontal group_form', onkeydown: "if(event.keyCode==13)return false;"}, wrapper: :horizontal_form) do |f| %>
+    <div class="modal-body">
+      <%= f.input :category_id, collection: Category.all.collect{|category| [category.name, category.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%'} %>
+      <%= f.input :technology_id, collection: Technology.all.collect{|t| [t.name, t.id]} , input_html: { class: 'select2', width: '100%', style: 'width: 100%'}%>
+      <%= f.input :product_no, input_html: { class: 'mono' } %>
+      <%= f.input :name%>
+      <%= f.input :norms %>
+      <%= f.input :desc %>
+      <%= f.input :instance_ids, collection: Instance.all.collect{|instance| ["#{instance.instance_no} / #{instance.name}", instance.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder')%>
+      <%= f.input :user_ids, collection: User.all.collect{|user| [user.name, user.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder')%>
+      <%= f.input :organization_ids, collection: Organization.all.collect{|org| [org.name, org.id]}, input_html: { class: 'select2', width: '100%', style: 'width: 100%', multiple: "multiple" }, 'data-placeholder': t('common.multi_select_placeholder')%>
+    </div>
+  <% end %>
+
+  <div class="modal-footer">
+    <%= button_tag t('common.save'), class: 'btn btn-primary commit', data: { disable_with: t('common.saving') } %>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= t('common.cancel') %></button>
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+    $('.commit').click(function(){
+      showSpinner();
+      $.ajax({
+        type: "POST",
+        url: $('.group_form').attr('action'),
+        data: $('.group_form').serialize(),
+        dataType: 'script',
+        async: false,
+        error: function(request) { alert("Connection error"); }
+      });
+    });
+    initSelect2($('.select2'));
+  });
+</script>
