@@ -11,11 +11,6 @@ It is not a multi-tenant SaaS. Every logged-in user sees the same company's
 drawings; there is no tenant-level data isolation, by design (see
 [Terminology & scope](#terminology--scope) below).
 
-> 📷 Screenshot placeholder — see below
-
-<!-- Replace this block with: ![MuseFlow products list](docs/screenshots/products.png).
-     Capture it by logging in as admin/password123 and opening the products list. -->
-
 ## Quick start
 
 Prerequisites: Ruby 4.0.1, PostgreSQL, and Redis, all running locally.
