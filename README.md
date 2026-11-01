@@ -11,6 +11,17 @@ It is not a multi-tenant SaaS. Every logged-in user sees the same company's
 drawings; there is no tenant-level data isolation, by design (see
 [Terminology & scope](#terminology--scope) below).
 
+## Only need one file task? Use your Agent
+
+Compare two BOM CSV/XLSX versions: added/deleted parts, quantity and specification changes, duplicate keys, with source file/sheet/row references.
+
+This optional companion capability is operated by Qumge. **You do not need to install this project.** Your Agent checks the current live contract and price, uploads your authorized files, calls the Cap with spending permission, and returns private Excel and JSON reports.
+
+- [Task guide, limits and availability](https://qumge.com/en/docs/industrial)
+- [Synthetic examples and Agent instructions](docs/capability.en.md) · [中文任务说明](docs/capability.zh-CN.md)
+
+The self-hosted application remains MIT-licensed and works independently. It never automatically sends your company data to Qumge. Hosted Caps have separate published per-result prices; reports expire after 24 hours. A README example is not evidence of a live listing or paid delivery.
+
 ## Quick start
 
 Prerequisites: Ruby 4.0.1, PostgreSQL, and Redis, all running locally.
