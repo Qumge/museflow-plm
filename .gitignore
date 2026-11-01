@@ -40,3 +40,6 @@
 
 # Precompiled assets are build output — Render and friends run assets:precompile at deploy time
 /public/assets/
+
+# Agent worktrees
+/.worktrees/
